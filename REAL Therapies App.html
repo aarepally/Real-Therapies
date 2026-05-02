@@ -1181,33 +1181,44 @@ const COV_DRUG_TRADE = {
   MER: "Merrem", CIP: "Cipro", AZT: "Azactam", CAZ: "Fortaz", MTZ: "Flagyl"
 };
 
+function buildSearchText(drugList) {
+  return drugList.map(r => r.drug + " " + r.trade).join(" ");
+}
+
 const SEARCH_INDEX = [
 ...Object.entries(REGIMENS).flatMap(([acq, risks]) =>
 Object.entries(risks).flatMap(([risk, allergies]) =>
-Object.entries(allergies).map(([allergy, data]) => ({
-  type: "regimen", tag: "Regimen",
-  title: data.title,
-  sub: data.preferred.map((r) => r.drug).join(", "),
-  searchExtra: [...data.preferred, ...data.alternatives].map((r) => r.trade).join(" "),
-  screen: "selector", acq, risk, allergy
-}))
+Object.entries(allergies).map(([allergy, data]) => {
+  const allDrugs = [...data.preferred, ...(data.alternatives || [])];
+  return {
+    type: "regimen", tag: "Regimen",
+    title: data.title,
+    sub: data.preferred.map((r) => r.drug).join(", "),
+    searchText: (data.title + " " + buildSearchText(allDrugs)).toLowerCase(),
+    screen: "selector", acq, risk, allergy
+  };
+})
 )
 ),
-...Object.entries(SOURCE_DETAILS).map(([name, d]) => ({
-  type: "source", tag: "Source",
-  title: name,
-  sub: d.subtitle,
-  searchExtra: [...d.preferred, ...d.alternatives].map((r) => r.trade).join(" "),
-  screen: "source-detail", sourceName: name
-})),
+...Object.entries(SOURCE_DETAILS).map(([name, d]) => {
+  const allDrugs = [...d.preferred, ...(d.alternatives || [])];
+  return {
+    type: "source", tag: "Source",
+    title: name,
+    sub: d.subtitle,
+    searchText: (name + " " + d.subtitle + " " + buildSearchText(allDrugs)).toLowerCase(),
+    screen: "source-detail", sourceName: name
+  };
+}),
 ...COVERAGE_GROUPS.flatMap((g) => g.pathogens.map((p) => ({
   type: "pathogen", tag: "Pathogen",
   title: p.name,
   sub: g.group,
+  searchText: (p.name + " " + g.group).toLowerCase(),
   screen: "coverage"
 }))),
-{ type: "duration", tag: "Duration", title: "STOP-IT Trial", sub: "4 days vs. ~8 days — equivalent outcomes", screen: "duration" },
-{ type: "duration", tag: "Duration", title: "Duration of Therapy", sub: "Guidelines by clinical scenario", screen: "duration" }];
+{ type: "duration", tag: "Duration", title: "STOP-IT Trial", sub: "4 days vs. ~8 days — equivalent outcomes", searchText: "stop-it trial duration 4 days 8 days", screen: "duration" },
+{ type: "duration", tag: "Duration", title: "Duration of Therapy", sub: "Guidelines by clinical scenario", searchText: "duration of therapy guidelines sis stop-it", screen: "duration" }];
 
 
 // ── Icon components ───────────────────────────────────────
@@ -1665,7 +1676,7 @@ function SearchScreen({ navigate, initialQuery }) {
   useEffect(() => { if (inputRef.current) inputRef.current.focus(); }, []);
 
   const results = q.trim().length < 1 ? [] : SEARCH_INDEX.filter((item) =>
-  (item.title + " " + item.sub + " " + (item.searchExtra || "")).toLowerCase().includes(q.toLowerCase())
+    item.searchText.includes(q.trim().toLowerCase())
   ).slice(0, 20);
 
   function highlight(text) {

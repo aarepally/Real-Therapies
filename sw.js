@@ -1,7 +1,7 @@
 // REAL Therapies — Service Worker
 // Caches the app shell for full offline use
 
-const CACHE_NAME = 'real-therapies-v1';
+const CACHE_NAME = 'real-therapies-v3';
 
 const PRECACHE = [
   './REAL Therapies App.html',

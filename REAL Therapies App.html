@@ -65,12 +65,11 @@
 
   /* On real mobile — fill the entire screen, no bezel */
   @media (max-width: 500px) {
-    html, body { background: oklch(97% 0.012 75); }
-    .outer { width: 100%; height: 100%; gap: 0; }
+    html, body { background: oklch(97% 0.012 75); height: 100dvh; }
+    .outer { width: 100%; height: 100dvh; gap: 0; }
     .outer-label { display: none; }
     .phone-shell {
       width: 100vw;
-      height: 100%;
       height: 100dvh;
       border-radius: 0;
       box-shadow: none;
@@ -81,7 +80,7 @@
       position: relative;
       inset: auto;
       width: 100%;
-      height: 100%;
+      height: 100dvh;
     }
     .dynamic-island { display: none; }
     .status-bar { display: none; }
@@ -157,8 +156,8 @@
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
     border-top: 0.5px solid oklch(85% 0.015 65);
-    padding: 8px 0 28px;
-    padding-bottom: max(28px, env(safe-area-inset-bottom));
+    padding: 8px 0 0;
+    padding-bottom: max(20px, env(safe-area-inset-bottom));
     flex-shrink: 0;
     position: relative;
     z-index: 50;
@@ -1148,6 +1147,10 @@ const COVERAGE_GROUPS = [
 }];
 
 const COV_DRUGS = ["CTX", "ERT", "PIP", "FEP", "MER", "CIP", "AZT", "CAZ", "MTZ"];
+const COV_DRUG_TRADE = {
+  CTX: "Rocephin", ERT: "Invanz", PIP: "Zosyn", FEP: "Maxipime",
+  MER: "Merrem", CIP: "Cipro", AZT: "Azactam", CAZ: "Fortaz", MTZ: "Flagyl"
+};
 
 const SEARCH_INDEX = [
 ...Object.entries(REGIMENS).flatMap(([acq, risks]) =>
@@ -1156,6 +1159,7 @@ Object.entries(allergies).map(([allergy, data]) => ({
   type: "regimen", tag: "Regimen",
   title: data.title,
   sub: data.preferred.map((r) => r.drug).join(", "),
+  searchExtra: [...data.preferred, ...data.alternatives].map((r) => r.trade).join(" "),
   screen: "selector", acq, risk, allergy
 }))
 )
@@ -1164,6 +1168,7 @@ Object.entries(allergies).map(([allergy, data]) => ({
   type: "source", tag: "Source",
   title: name,
   sub: d.subtitle,
+  searchExtra: [...d.preferred, ...d.alternatives].map((r) => r.trade).join(" "),
   screen: "source-detail", sourceName: name
 })),
 ...COVERAGE_GROUPS.flatMap((g) => g.pathogens.map((p) => ({
@@ -1449,7 +1454,7 @@ function CoverageScreen({ navigate }) {
             <thead>
               <tr>
                 <th>Organism</th>
-                {COV_DRUGS.map((d) => <th key={d}>{d}</th>)}
+                {COV_DRUGS.map((d) => <th key={d}>{d}<span style={{display:'block',fontSize:8,fontWeight:400,opacity:0.65,letterSpacing:'0.02em',textTransform:'none'}}>{COV_DRUG_TRADE[d]}</span></th>)}
               </tr>
             </thead>
             <tbody>
@@ -1631,7 +1636,7 @@ function SearchScreen({ navigate, initialQuery }) {
   useEffect(() => { if (inputRef.current) inputRef.current.focus(); }, []);
 
   const results = q.trim().length < 1 ? [] : SEARCH_INDEX.filter((item) =>
-  (item.title + " " + item.sub).toLowerCase().includes(q.toLowerCase())
+  (item.title + " " + item.sub + " " + (item.searchExtra || "")).toLowerCase().includes(q.toLowerCase())
   ).slice(0, 20);
 
   function highlight(text) {

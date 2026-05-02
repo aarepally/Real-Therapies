@@ -40,7 +40,7 @@
   }
   #root { display: flex; align-items: center; justify-content: center; width: 100%; height: 100%; }
 
-  /* Phone shell */
+  /* Phone shell — shown on desktop only */
   .phone-shell {
     position: relative;
     width: 393px;
@@ -63,6 +63,32 @@
     background: oklch(97% 0.012 75);
     display: flex;
     flex-direction: column;
+  }
+
+  /* On real mobile — fill the entire screen, no bezel */
+  @media (max-width: 500px) {
+    html, body { background: oklch(97% 0.012 75); }
+    .outer { width: 100%; height: 100%; gap: 0; }
+    .outer-label { display: none; }
+    .phone-shell {
+      width: 100vw;
+      height: 100%;
+      height: 100dvh;
+      border-radius: 0;
+      box-shadow: none;
+      background: oklch(97% 0.012 75);
+    }
+    .phone-screen {
+      border-radius: 0;
+      position: relative;
+      inset: auto;
+      width: 100%;
+      height: 100%;
+    }
+    /* Hide the fake dynamic island on real devices */
+    .dynamic-island { display: none; }
+    /* Hide the fake status bar — iOS provides its own */
+    .status-bar { display: none; }
   }
   /* Dynamic island */
   .dynamic-island {
@@ -136,6 +162,7 @@
     -webkit-backdrop-filter: blur(20px);
     border-top: 0.5px solid oklch(85% 0.015 65);
     padding: 8px 0 28px;
+    padding-bottom: max(28px, env(safe-area-inset-bottom));
     flex-shrink: 0;
     position: relative;
     z-index: 50;

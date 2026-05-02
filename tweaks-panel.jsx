@@ -423,3 +423,6 @@ Object.assign(window, {
   TweakSlider, TweakToggle, TweakRadio, TweakSelect,
   TweakText, TweakNumber, TweakColor, TweakButton,
 });
+
+// Signal to the main script that all exports are ready
+document.dispatchEvent(new Event('tweaks-panel-ready'));

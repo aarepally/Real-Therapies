@@ -1,0 +1,1930 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Abdominal Abscess — Clinical Reference</title>
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+<meta name="ext-resource-dependency" content="assets/stopIT_subgroups.jpg" data-resource-id="stopitImg" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Source+Sans+3:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --cream: oklch(97% 0.012 75);
+    --cream-dark: oklch(93% 0.016 70);
+    --cream-border: oklch(87% 0.020 65);
+    --ink: oklch(22% 0.015 50);
+    --ink-mid: oklch(42% 0.012 50);
+    --ink-light: oklch(60% 0.010 50);
+    --crimson: oklch(42% 0.12 25);
+    --crimson-light: oklch(92% 0.04 25);
+    --crimson-mid: oklch(70% 0.09 25);
+    --teal: oklch(48% 0.10 185);
+    --teal-light: oklch(92% 0.04 185);
+    --gold: oklch(62% 0.10 75);
+    --gold-light: oklch(94% 0.04 75);
+    --page-bg: var(--cream);
+    --serif: 'Lora', Georgia, serif;
+    --sans: 'Source Sans 3', system-ui, sans-serif;
+  }
+
+  html, body {
+    min-height: 100vh;
+    background: var(--page-bg);
+    color: var(--ink);
+    font-family: var(--sans);
+    font-size: 15px;
+    line-height: 1.6;
+  }
+
+  #root {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* ── Header ── */
+  .site-header {
+    background: var(--ink);
+    color: var(--cream);
+    padding: 18px 40px;
+    display: flex;
+    align-items: baseline;
+    gap: 24px;
+    border-bottom: 3px solid var(--crimson);
+  }
+  .site-header h1 {
+    font-family: var(--serif);
+    font-size: 22px;
+    font-weight: 600;
+    letter-spacing: 0.01em;
+  }
+  .site-header .subtitle {
+    font-size: 13px;
+    color: oklch(72% 0.008 50);
+    font-style: italic;
+    font-family: var(--serif);
+  }
+  .site-header .badge {
+    margin-left: auto;
+    font-size: 11px;
+    color: var(--crimson-mid);
+    font-family: var(--sans);
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  /* ── Tab nav ── */
+  .tab-nav {
+    background: var(--cream-dark);
+    border-bottom: 1px solid var(--cream-border);
+    display: flex;
+    padding: 0 40px;
+    gap: 0;
+  }
+  .tab-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 14px 22px 12px;
+    font-family: var(--sans);
+    font-size: 13.5px;
+    font-weight: 500;
+    color: var(--ink-mid);
+    border-bottom: 3px solid transparent;
+    transition: color 0.15s, border-color 0.15s;
+    letter-spacing: 0.02em;
+  }
+  .tab-btn:hover { color: var(--ink); }
+  .tab-btn.active {
+    color: var(--crimson);
+    border-bottom-color: var(--crimson);
+    font-weight: 600;
+  }
+
+  /* ── Layout ── */
+  .page-content {
+    flex: 1;
+    padding: 36px 40px 60px;
+    max-width: 1100px;
+    margin: 0 auto;
+    width: 100%;
+  }
+
+  /* ── Section heading ── */
+  .section-heading {
+    font-family: var(--serif);
+    font-size: 20px;
+    font-weight: 600;
+    color: var(--ink);
+    margin-bottom: 6px;
+  }
+  .section-sub {
+    font-size: 13.5px;
+    color: var(--ink-light);
+    margin-bottom: 28px;
+    font-style: italic;
+    font-family: var(--serif);
+  }
+
+  /* ══════════════════════════════════
+     TAB 1: GUIDED DECISION TOOL
+  ══════════════════════════════════ */
+  .stepper-track {
+    display: flex;
+    align-items: center;
+    gap: 0;
+    margin-bottom: 32px;
+  }
+  .step-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--ink-light);
+    font-family: var(--sans);
+  }
+  .step-item.active { color: var(--crimson); }
+  .step-item.done { color: var(--teal); }
+  .step-num {
+    width: 26px; height: 26px;
+    border-radius: 50%;
+    border: 2px solid currentColor;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 12px; font-weight: 700;
+    flex-shrink: 0;
+  }
+  .step-item.done .step-num {
+    background: var(--teal);
+    color: white;
+    border-color: var(--teal);
+  }
+  .step-item.active .step-num {
+    background: var(--crimson);
+    color: white;
+    border-color: var(--crimson);
+  }
+  .step-connector {
+    flex: 1;
+    height: 1px;
+    background: var(--cream-border);
+    margin: 0 10px;
+    max-width: 60px;
+  }
+
+  .question-card {
+    background: white;
+    border: 1px solid var(--cream-border);
+    border-radius: 6px;
+    padding: 28px 32px 32px;
+    margin-bottom: 20px;
+    box-shadow: 0 1px 4px oklch(0% 0 0 / 0.05);
+  }
+  .question-label {
+    font-family: var(--serif);
+    font-size: 17px;
+    font-weight: 600;
+    color: var(--ink);
+    margin-bottom: 20px;
+    line-height: 1.4;
+  }
+  .question-label span.step-tag {
+    display: inline-block;
+    font-family: var(--sans);
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--crimson);
+    margin-bottom: 6px;
+    display: block;
+  }
+
+  .option-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 12px;
+  }
+  .option-btn {
+    background: var(--cream);
+    border: 1.5px solid var(--cream-border);
+    border-radius: 5px;
+    padding: 14px 16px;
+    cursor: pointer;
+    font-family: var(--sans);
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--ink);
+    text-align: left;
+    transition: all 0.15s;
+    line-height: 1.4;
+  }
+  .option-btn:hover {
+    border-color: var(--crimson-mid);
+    background: var(--crimson-light);
+    color: var(--crimson);
+  }
+  .option-btn .opt-icon {
+    display: block;
+    font-size: 11px;
+    color: var(--ink-light);
+    margin-top: 4px;
+    font-weight: 400;
+  }
+
+  .back-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 13px;
+    color: var(--ink-light);
+    font-family: var(--sans);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-bottom: 20px;
+    padding: 4px 0;
+  }
+  .back-btn:hover { color: var(--ink); }
+
+  /* Result card */
+  .result-card {
+    background: white;
+    border: 1px solid var(--cream-border);
+    border-radius: 6px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px oklch(0% 0 0 / 0.06);
+  }
+  .result-header {
+    background: var(--ink);
+    color: var(--cream);
+    padding: 20px 28px;
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+  }
+  .result-header .rh-label {
+    font-family: var(--sans);
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--crimson-mid);
+    margin-bottom: 4px;
+  }
+  .result-header h2 {
+    font-family: var(--serif);
+    font-size: 19px;
+    font-weight: 600;
+    line-height: 1.3;
+  }
+  .result-header .rh-context {
+    font-size: 13px;
+    color: oklch(72% 0.008 50);
+    margin-top: 6px;
+    font-style: italic;
+    font-family: var(--serif);
+  }
+
+  .result-body {
+    padding: 24px 28px;
+  }
+  .regimen-section {
+    margin-bottom: 24px;
+  }
+  .regimen-section:last-child { margin-bottom: 0; }
+  .reg-title {
+    font-family: var(--sans);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--ink-light);
+    margin-bottom: 10px;
+    padding-bottom: 6px;
+    border-bottom: 1px solid var(--cream-border);
+  }
+  .regimen-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .regimen-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 10px 14px;
+    border-radius: 4px;
+    background: var(--cream);
+    border-left: 3px solid transparent;
+  }
+  .regimen-item.preferred { border-left-color: var(--crimson); }
+  .regimen-item.alternative { border-left-color: var(--teal); background: var(--teal-light); }
+  .regimen-item.note { border-left-color: var(--gold); background: var(--gold-light); }
+  .reg-drug {
+    font-family: var(--sans);
+    font-size: 14.5px;
+    font-weight: 600;
+    color: var(--ink);
+    flex: 1;
+  }
+  .reg-drug .operator {
+    font-weight: 400;
+    color: var(--ink-light);
+    margin: 0 4px;
+  }
+  .reg-trade {
+    font-size: 12.5px;
+    font-weight: 400;
+    color: var(--ink-light);
+    font-style: italic;
+    margin-left: 2px;
+  }
+  .reg-note {
+    font-size: 12.5px;
+    color: var(--ink-mid);
+    margin-top: 3px;
+    font-style: italic;
+  }
+
+  .duration-box {
+    background: var(--cream-dark);
+    border: 1px solid var(--cream-border);
+    border-radius: 5px;
+    padding: 14px 18px;
+    margin-top: 20px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+  .dur-num {
+    font-family: var(--serif);
+    font-size: 36px;
+    font-weight: 700;
+    color: var(--crimson);
+    line-height: 1;
+    flex-shrink: 0;
+  }
+  .dur-label {
+    font-size: 13px;
+    color: var(--ink-mid);
+    line-height: 1.5;
+  }
+  .dur-label strong { color: var(--ink); font-weight: 600; }
+
+  .coverage-chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-top: 12px;
+  }
+  .chip {
+    padding: 3px 10px;
+    border-radius: 100px;
+    font-size: 12px;
+    font-weight: 500;
+    font-family: var(--sans);
+  }
+  .chip-gn { background: oklch(90% 0.05 220); color: oklch(35% 0.10 220); }
+  .chip-gp { background: oklch(91% 0.05 140); color: oklch(35% 0.10 140); }
+  .chip-ana { background: oklch(91% 0.05 55); color: oklch(38% 0.10 55); }
+  .chip-fun { background: oklch(90% 0.05 290); color: oklch(35% 0.10 290); }
+
+  .restart-btn {
+    margin-top: 20px;
+    background: var(--ink);
+    color: var(--cream);
+    border: none;
+    border-radius: 4px;
+    padding: 10px 22px;
+    font-family: var(--sans);
+    font-size: 13.5px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.15s;
+    letter-spacing: 0.02em;
+  }
+  .restart-btn:hover { background: var(--crimson); }
+
+  /* ══════════════════════════════════
+     TAB 2: MICROBIOLOGY
+  ══════════════════════════════════ */
+  .micro-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    margin-bottom: 28px;
+  }
+  @media (max-width: 700px) { .micro-grid { grid-template-columns: 1fr; } }
+
+  .micro-card {
+    background: white;
+    border: 1px solid var(--cream-border);
+    border-radius: 6px;
+    overflow: hidden;
+  }
+  .micro-card-head {
+    padding: 14px 18px;
+    font-family: var(--sans);
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+  .micro-card-head.community {
+    background: var(--teal-light);
+    color: var(--teal);
+    border-bottom: 1px solid oklch(80% 0.06 185);
+  }
+  .micro-card-head.healthcare {
+    background: var(--crimson-light);
+    color: var(--crimson);
+    border-bottom: 1px solid oklch(82% 0.06 25);
+  }
+  .micro-card-body { padding: 16px 18px; }
+  .org-group {
+    margin-bottom: 14px;
+  }
+  .org-group:last-child { margin-bottom: 0; }
+  .org-group-title {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--ink-light);
+    margin-bottom: 6px;
+  }
+  .org-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+  .org-list li {
+    font-size: 13.5px;
+    color: var(--ink);
+    display: block;
+    padding-left: 14px;
+    position: relative;
+    line-height: 1.5;
+  }
+  .org-list li .pct {
+    font-size: 12px;
+    color: var(--ink-light);
+    font-style: italic;
+  }
+  .org-list li::before {
+    content: '—';
+    color: var(--cream-border);
+    position: absolute;
+    left: 0;
+  }
+
+  .sources-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: 12px;
+    margin-top: 8px;
+  }
+  .source-tile {
+    background: white;
+    border: 1.5px solid var(--cream-border);
+    border-radius: 5px;
+    padding: 14px 16px;
+    cursor: pointer;
+    transition: border-color 0.15s, box-shadow 0.15s, transform 0.1s;
+  }
+  .source-tile:hover {
+    border-color: var(--crimson-mid);
+    box-shadow: 0 2px 10px oklch(0% 0 0 / 0.07);
+    transform: translateY(-1px);
+  }
+  .source-tile.selected {
+    border-color: var(--crimson);
+    background: var(--crimson-light);
+  }
+  .source-tile .st-name {
+    font-family: var(--serif);
+    font-size: 14.5px;
+    font-weight: 600;
+    color: var(--ink);
+    margin-bottom: 4px;
+  }
+  .source-tile .st-detail {
+    font-size: 12.5px;
+    color: var(--ink-mid);
+    line-height: 1.5;
+  }
+  .source-tile .st-arrow {
+    font-size: 11px;
+    color: var(--crimson);
+    margin-top: 6px;
+    font-weight: 600;
+    font-family: var(--sans);
+    letter-spacing: 0.04em;
+  }
+
+  /* Source detail drawer */
+  .source-detail {
+    margin-top: 20px;
+    background: white;
+    border: 1px solid var(--cream-border);
+    border-radius: 6px;
+    overflow: hidden;
+    box-shadow: 0 2px 12px oklch(0% 0 0 / 0.07);
+    animation: slideDown 0.18s ease;
+  }
+  @keyframes slideDown {
+    from { opacity: 0; transform: translateY(-8px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  .sd-header {
+    background: var(--ink);
+    color: var(--cream);
+    padding: 18px 24px;
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 16px;
+  }
+  .sd-header h3 {
+    font-family: var(--serif);
+    font-size: 18px;
+    font-weight: 600;
+  }
+  .sd-header .sd-sub {
+    font-size: 13px;
+    color: oklch(72% 0.008 50);
+    margin-top: 4px;
+    font-style: italic;
+    font-family: var(--serif);
+  }
+  .sd-close {
+    background: none;
+    border: none;
+    color: oklch(65% 0.008 50);
+    font-size: 20px;
+    cursor: pointer;
+    line-height: 1;
+    padding: 0 2px;
+    flex-shrink: 0;
+  }
+  .sd-close:hover { color: var(--cream); }
+  .sd-body {
+    padding: 22px 24px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+  }
+  @media (max-width: 640px) { .sd-body { grid-template-columns: 1fr; } }
+  .sd-section-title {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--ink-light);
+    margin-bottom: 10px;
+    padding-bottom: 6px;
+    border-bottom: 1px solid var(--cream-border);
+  }
+  .sd-org-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    margin-bottom: 0;
+  }
+  .sd-org-list li {
+    font-size: 13.5px;
+    color: var(--ink);
+    display: block;
+    padding-left: 14px;
+    position: relative;
+    line-height: 1.5;
+  }
+  .sd-org-list li::before {
+    content: '—';
+    color: var(--cream-border);
+    position: absolute;
+    left: 0;
+  }
+  .sd-org-list li .pct {
+    font-size: 12px;
+    color: var(--ink-light);
+    font-style: italic;
+  }
+  .sd-regimen-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .sd-regimen-item {
+    padding: 9px 13px;
+    border-radius: 4px;
+    background: var(--cream);
+    border-left: 3px solid var(--crimson);
+    font-size: 13.5px;
+  }
+  .sd-regimen-item.alt { border-left-color: var(--teal); background: var(--teal-light); }
+  .sd-drug { font-weight: 600; color: var(--ink); }
+  .sd-drug-trade { font-weight: 400; font-style: italic; color: var(--ink-light); font-size: 12px; margin-left: 3px; }
+  .sd-drug-note { font-size: 12px; color: var(--ink-mid); margin-top: 2px; font-style: italic; }
+
+  /* ══════════════════════════════════
+     TAB 3: DURATION
+  ══════════════════════════════════ */
+  .duration-table-wrap {
+    background: white;
+    border: 1px solid var(--cream-border);
+    border-radius: 6px;
+    overflow: hidden;
+    margin-bottom: 28px;
+  }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  thead tr {
+    background: var(--ink);
+    color: var(--cream);
+  }
+  thead th {
+    padding: 12px 18px;
+    text-align: left;
+    font-family: var(--sans);
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+  tbody tr {
+    border-bottom: 1px solid var(--cream-border);
+  }
+  tbody tr:last-child { border-bottom: none; }
+  tbody tr:nth-child(even) { background: var(--cream); }
+  tbody td {
+    padding: 12px 18px;
+    font-size: 14px;
+    color: var(--ink);
+    vertical-align: top;
+    line-height: 1.5;
+  }
+  tbody td:first-child {
+    font-weight: 500;
+  }
+  td .dur-highlight {
+    font-family: var(--serif);
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--crimson);
+    margin-right: 4px;
+  }
+
+  .stopit-box {
+    background: white;
+    border: 1px solid var(--cream-border);
+    border-radius: 6px;
+    padding: 24px 28px;
+    margin-bottom: 20px;
+  }
+  .stopit-box h3 {
+    font-family: var(--serif);
+    font-size: 16px;
+    font-weight: 600;
+    margin-bottom: 12px;
+    color: var(--ink);
+  }
+  .stopit-stat-row {
+    display: flex;
+    gap: 32px;
+    margin-bottom: 16px;
+    flex-wrap: wrap;
+  }
+  .stat-block { text-align: center; }
+  .stat-num {
+    font-family: var(--serif);
+    font-size: 32px;
+    font-weight: 700;
+    color: var(--crimson);
+    line-height: 1;
+  }
+  .stat-desc {
+    font-size: 12px;
+    color: var(--ink-mid);
+    margin-top: 4px;
+    max-width: 120px;
+  }
+  .stopit-quote {
+    border-left: 3px solid var(--cream-border);
+    padding-left: 16px;
+    margin: 16px 0;
+    font-style: italic;
+    font-family: var(--serif);
+    font-size: 14px;
+    color: var(--ink-mid);
+    line-height: 1.6;
+  }
+  .stopit-quote cite {
+    display: block;
+    margin-top: 8px;
+    font-size: 12px;
+    font-style: normal;
+    color: var(--ink-light);
+  }
+  .forest-img {
+    width: 100%;
+    border: 1px solid var(--cream-border);
+    border-radius: 4px;
+    margin-top: 12px;
+  }
+
+  /* ══════════════════════════════════
+     TAB 4: PATHOGEN COVERAGE MATRIX
+  ══════════════════════════════════ */
+  .matrix-wrap {
+    background: white;
+    border: 1px solid var(--cream-border);
+    border-radius: 6px;
+    overflow: auto;
+    margin-bottom: 24px;
+    box-shadow: 0 1px 4px oklch(0% 0 0 / 0.05);
+  }
+  .matrix-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+  }
+  .matrix-table thead tr:first-child th {
+    background: var(--ink);
+    color: var(--cream);
+    padding: 10px 12px 8px;
+    font-family: var(--sans);
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.07em;
+    text-transform: uppercase;
+    white-space: nowrap;
+    text-align: center;
+    border-right: 1px solid oklch(35% 0.01 50);
+  }
+  .matrix-table thead tr:first-child th:first-child {
+    text-align: left;
+    min-width: 180px;
+    position: sticky;
+    left: 0;
+    z-index: 2;
+    background: var(--ink);
+  }
+  .matrix-table thead tr.group-row th {
+    background: var(--cream-dark);
+    color: var(--ink-light);
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 5px 12px;
+    border-bottom: 1px solid var(--cream-border);
+    text-align: left;
+  }
+  .matrix-table tbody tr {
+    border-bottom: 1px solid var(--cream-border);
+  }
+  .matrix-table tbody tr:last-child { border-bottom: none; }
+  .matrix-table tbody tr:hover { background: oklch(96% 0.010 75); }
+  .matrix-table tbody td {
+    padding: 9px 12px;
+    vertical-align: middle;
+    border-right: 1px solid var(--cream-border);
+    text-align: center;
+  }
+  .matrix-table tbody td:first-child {
+    text-align: left;
+    font-weight: 500;
+    white-space: nowrap;
+    position: sticky;
+    left: 0;
+    background: white;
+    z-index: 1;
+    border-right: 2px solid var(--cream-border);
+  }
+  .matrix-table tbody tr:hover td:first-child {
+    background: oklch(96% 0.010 75);
+  }
+  .matrix-table tbody td.group-spacer {
+    background: var(--cream-dark);
+    padding: 4px 12px;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--ink-light);
+    text-align: left;
+    border-right: none;
+    position: sticky;
+    left: 0;
+  }
+  .matrix-table tbody tr.group-spacer-row td {
+    background: var(--cream-dark);
+    border-bottom: 1px solid var(--cream-border);
+  }
+  .pathogen-name { font-family: var(--sans); font-size: 13.5px; }
+  .pathogen-sub { font-size: 11px; color: var(--ink-light); font-style: italic; font-weight: 400; display: block; }
+
+  /* Activity cells */
+  .act-cell { display: flex; align-items: center; justify-content: center; }
+  .act-dot {
+    width: 22px; height: 22px;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 11px; font-weight: 700; line-height: 1;
+  }
+  .act-4 { background: oklch(52% 0.14 155); color: white; }      /* Active */
+  .act-3 { background: oklch(70% 0.14 88); color: white; }       /* Variable */
+  .act-2 { background: oklch(76% 0.08 50); color: white; }       /* Weak */
+  .act-1 { background: oklch(88% 0.01 50); color: var(--ink-light); } /* None */
+  .act-s { background: oklch(88% 0.04 25); color: var(--crimson); }   /* Special */
+
+  .matrix-legend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+    padding: 14px 18px;
+    background: var(--cream-dark);
+    border-top: 1px solid var(--cream-border);
+    border-radius: 0 0 6px 6px;
+  }
+  .legend-item {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    font-size: 12px;
+    color: var(--ink-mid);
+    font-family: var(--sans);
+  }
+
+  .matrix-filter-row {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-bottom: 16px;
+    align-items: center;
+  }
+  .filter-label {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--ink-light);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    margin-right: 4px;
+  }
+  .filter-chip {
+    padding: 4px 12px;
+    border-radius: 100px;
+    font-size: 12.5px;
+    font-weight: 500;
+    border: 1.5px solid var(--cream-border);
+    background: white;
+    color: var(--ink-mid);
+    cursor: pointer;
+    transition: all 0.12s;
+    font-family: var(--sans);
+  }
+  .filter-chip:hover { border-color: var(--ink-light); color: var(--ink); }
+  .filter-chip.active {
+    background: var(--ink);
+    border-color: var(--ink);
+    color: var(--cream);
+  }
+
+  /* refs */
+  .ref-section {
+    margin-top: 36px;
+    padding-top: 20px;
+    border-top: 1px solid var(--cream-border);
+  }
+  .ref-title {
+    font-family: var(--serif);
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--ink-light);
+    margin-bottom: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+  .ref-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+  .ref-list li {
+    font-size: 12px;
+    color: var(--ink-light);
+    line-height: 1.5;
+    display: flex;
+    gap: 8px;
+  }
+  .ref-num { flex-shrink: 0; font-weight: 600; color: var(--crimson); }
+</style>
+</head>
+<body>
+<div id="root"></div>
+<script type="text/babel" src="tweaks-panel.jsx"></script>
+<script type="text/babel">
+
+const { useState } = React;
+
+// ── Data ──────────────────────────────────────────────────
+const TWEAK_DEFAULTS = /*EDITMODE-BEGIN*/{
+  "fontScale": 1,
+  "showReferences": true,
+  "accentColor": "crimson"
+} /*EDITMODE-END*/;
+
+const REGIMENS = {
+  // [acquisition][risk][allergy]
+  community: {
+    lower: {
+      none: {
+        title: "Lower-Risk, Community-Acquired",
+        context: "No β-lactam allergy · Community-acquired · Lower severity",
+        preferred: [
+        { drug: "Ceftriaxone + Metronidazole", trade: "Rocephin + Flagyl", note: "Most evidence base; preferred first-line" },
+        { drug: "Ertapenem", trade: "Invanz", note: "Monotherapy; convenient once-daily dosing" }],
+
+        alternatives: [
+        { drug: "Moxifloxacin", trade: "Avelox", note: "Monotherapy; if oral step-down needed" }],
+
+        coverage: ["GN (Enterobacteriaceae)", "Anaerobes (B. fragilis)", "Streptococcus spp."],
+        coverageTypes: ["gn", "ana", "gp"],
+        duration: 4,
+        durationNote: "≤4 days after adequate source control (STOP-IT / SIS 2017)"
+      },
+      allergy: {
+        title: "Lower-Risk, Community-Acquired — β-Lactam Allergy",
+        context: "β-Lactam allergy · Community-acquired · Lower severity",
+        preferred: [
+        { drug: "Ciprofloxacin + Metronidazole", trade: "Cipro + Flagyl", note: "Standard β-lactam allergy alternative" },
+        { drug: "Moxifloxacin", trade: "Avelox", note: "Monotherapy option (lower-risk only)" }],
+
+        alternatives: [],
+        coverage: ["GN (Enterobacteriaceae)", "Anaerobes", "Streptococcus spp."],
+        coverageTypes: ["gn", "ana", "gp"],
+        duration: 4,
+        durationNote: "≤4 days after adequate source control (STOP-IT / SIS 2017)"
+      }
+    },
+    higher: {
+      none: {
+        title: "Higher-Risk, Community-Acquired",
+        context: "No β-lactam allergy · Community-acquired · Higher severity / APACHE ≥10",
+        preferred: [
+        { drug: "Piperacillin–Tazobactam", trade: "Zosyn", note: "Highest abscess penetration; covers enterococci" },
+        { drug: "Cefepime + Metronidazole", trade: "Maxipime + Flagyl", note: "Network meta-analysis: lowest all-cause mortality" },
+        { drug: "Imipenem–Cilastatin", trade: "Primaxin", note: "Monotherapy; reserve for highly resistant organisms" },
+        { drug: "Meropenem", trade: "Merrem", note: "Monotherapy; preferred if ESBL suspected" }],
+
+        alternatives: [
+        { drug: "Ceftazidime + Metronidazole", trade: "Fortaz + Flagyl", note: "+ Ampicillin if enterococcal coverage needed" }],
+
+        coverage: ["GN (Enterobacteriaceae, Pseudomonas)", "Anaerobes", "Enterococcus faecalis"],
+        coverageTypes: ["gn", "ana", "gp"],
+        duration: 4,
+        durationNote: "≤4 days after adequate source control; up to 8 days if ICU (SIS 2024)"
+      },
+      allergy: {
+        title: "Higher-Risk, Community-Acquired — β-Lactam Allergy",
+        context: "β-Lactam allergy · Community-acquired · Higher severity",
+        preferred: [
+        { drug: "Aztreonam + Metronidazole + Vancomycin", trade: "Azactam + Flagyl + Vancocin", note: "Complete cover for GN, anaerobes, GP including enterococci" }],
+
+        alternatives: [],
+        coverage: ["GN (Enterobacteriaceae)", "Anaerobes", "Gram-positives (MRSA coverage)"],
+        coverageTypes: ["gn", "ana", "gp"],
+        duration: 4,
+        durationNote: "≤4 days after adequate source control; up to 8 days if ICU"
+      }
+    }
+  },
+  healthcare: {
+    lower: {
+      none: {
+        title: "Healthcare-Associated Infection",
+        context: "No β-lactam allergy · Healthcare-associated · Standard risk",
+        preferred: [
+        { drug: "Piperacillin–Tazobactam ± Vancomycin", trade: "Zosyn ± Vancocin", note: "Add vancomycin if MRSA risk factors present" },
+        { drug: "Meropenem + Ampicillin", trade: "Merrem + Principen", note: "For MDRO risk; ampicillin adds enterococcal coverage" }],
+
+        alternatives: [
+        { drug: "Ceftazidime–Avibactam + Metronidazole", trade: "Avycaz + Flagyl", note: "For confirmed/suspected ESBL or resistant organisms" }],
+
+        coverage: ["ESBL Enterobacteriaceae", "Pseudomonas aeruginosa", "Enterococcus (incl. VRE)", "MRSA", "Candida (if critically ill)"],
+        coverageTypes: ["gn", "ana", "gp", "fun"],
+        duration: 4,
+        durationNote: "≤4 days after adequate source control; consider Candida cover in critically ill",
+        note: "Consider empiric antifungal (echinocandin) if: ICU + prior broad-spectrum abx + upper GI perforation."
+      },
+      allergy: {
+        title: "Healthcare-Associated — β-Lactam Allergy",
+        context: "β-Lactam allergy · Healthcare-associated",
+        preferred: [
+        { drug: "Aztreonam + Metronidazole + Vancomycin", trade: "Azactam + Flagyl + Vancocin", note: "Aztreonam has minimal cross-reactivity with most penicillin allergies" }],
+
+        alternatives: [
+        { drug: "Tigecycline + Colistin", trade: "Tygacil + Coly-Mycin", note: "Only if no other options; high mortality data with tigecycline — use cautiously" }],
+
+        coverage: ["GN incl. ESBL", "Anaerobes", "MRSA"],
+        coverageTypes: ["gn", "ana", "gp"],
+        duration: 4,
+        durationNote: "≤4 days after adequate source control"
+      }
+    },
+    higher: {
+      none: {
+        title: "Healthcare-Associated — Critically Ill / MDRO Risk",
+        context: "No β-lactam allergy · Healthcare-associated · ICU / MDRO suspected",
+        preferred: [
+        { drug: "Meropenem + Vancomycin", trade: "Merrem + Vancocin", note: "Broadest empiric cover; de-escalate once cultures available" },
+        { drug: "Imipenem–Cilastatin + Vancomycin", trade: "Primaxin + Vancocin", note: "Alternative to meropenem" }],
+
+        alternatives: [
+        { drug: "Ceftazidime–Avibactam + Metronidazole + Vancomycin", trade: "Avycaz + Flagyl + Vancocin", note: "Carbapenem-sparing if ESBL confirmed" }],
+
+        coverage: ["Carbapenem-resistant organisms", "Pseudomonas", "MRSA", "Candida", "VRE risk"],
+        coverageTypes: ["gn", "gp", "fun"],
+        duration: 8,
+        durationNote: "≤8 days after source control (SIS 2024 update for critically ill); reassess daily",
+        note: "Empiric antifungal (micafungin/caspofungin) recommended in critically ill ICU patients with upper GI source."
+      },
+      allergy: {
+        title: "Healthcare-Associated, Critically Ill — β-Lactam Allergy",
+        context: "β-Lactam allergy · ICU / MDRO suspected",
+        preferred: [
+        { drug: "Aztreonam + Metronidazole + Vancomycin + Echinocandin", trade: "Azactam + Flagyl + Vancocin + Micafungin/Caspofungin", note: "Full empiric cover; note aztreonam has narrow GN activity" }],
+
+        alternatives: [],
+        coverage: ["GN (limited)", "Anaerobes", "MRSA", "Candida"],
+        coverageTypes: ["gn", "ana", "gp", "fun"],
+        duration: 8,
+        durationNote: "≤8 days; infectious disease consultation strongly recommended"
+      }
+    }
+  }
+};
+
+const CHIP_LABELS = {
+  gn: "Gram-neg / Enterobacteriaceae",
+  gp: "Gram-pos / Enterococcus",
+  ana: "Anaerobes",
+  fun: "Antifungal coverage"
+};
+
+const REFS = [
+{ num: 1, text: "Nichols RL. Management of Intra-Abdominal Sepsis. Am J Med. 1986;80(6B):204-9." },
+{ num: 2, text: "Ozturk E et al. Aetiologic Agents and Resistance Rates in Community-Acquired Complicated IAI. Diagn Microbiol Infect Dis. 2025;113(4):117023." },
+{ num: 5, text: "Mazuski JE et al. SIS Revised Guidelines on Management of Intra-Abdominal Infection. Surg Infect. 2017;18(1):1-76." },
+{ num: 7, text: "Huston JM et al. SIS Guidelines: 2024 Update. Surg Infect. 2024;25(6):419-435." },
+{ num: 10, text: "Cancela Costa A et al. Antibacterial Drug Concentrations in Intra-Abdominal Abscesses. Antimicrob Agents Chemother. 2025;69(1):e0117824." },
+{ num: 11, text: "Kong W et al. Efficacy of Antimicrobial Agents for Complicated IAI: Network Meta-Analysis. BMC Infect Dis. 2023;23(1):256." },
+{ num: 12, text: "Sawyer RG et al. Trial of Short-Course Antimicrobial Therapy for IAI (STOP-IT). NEJM. 2015;372(21):1996-2005." }];
+
+
+// ── Components ────────────────────────────────────────────
+
+function Chips({ types }) {
+  const labels = { gn: "Gram-neg", gp: "Gram-pos / Enterococcus", ana: "Anaerobes", fun: "Antifungals" };
+  return (
+    <div className="coverage-chips">
+      {types.map((t) =>
+      <span key={t} className={`chip chip-${t}`}>{labels[t]}</span>
+      )}
+    </div>);
+
+}
+
+function RegimenBlock({ items, label, type }) {
+  if (!items || items.length === 0) return null;
+  return (
+    <div className="regimen-section">
+      <div className="reg-title">{label}</div>
+      <ul className="regimen-list">
+        {items.map((item, i) =>
+        <li key={i} className={`regimen-item ${type}`}>
+            <div style={{ flex: 1 }}>
+              <div className="reg-drug">
+                {item.drug}
+                {item.trade && <span className="reg-trade"> ({item.trade})</span>}
+              </div>
+              {item.note && <div className="reg-note">{item.note}</div>}
+            </div>
+          </li>
+        )}
+      </ul>
+    </div>);
+
+}
+
+function ResultView({ answers, onRestart }) {
+  const { acquisition, risk, allergy } = answers;
+  const data = REGIMENS[acquisition]?.[risk]?.[allergy];
+  if (!data) return <div style={{ padding: 20 }}>No data found for this combination.</div>;
+
+  return (
+    <div>
+      <button className="back-btn" onClick={onRestart}>
+        ← Start over
+      </button>
+      <div className="result-card">
+        <div className="result-header">
+          <div style={{ flex: 1 }}>
+            <div className="rh-label">Recommended Regimen</div>
+            <h2>{data.title}</h2>
+            <div className="rh-context">{data.context}</div>
+          </div>
+        </div>
+        <div className="result-body">
+          <RegimenBlock items={data.preferred} label="Preferred Regimens" type="preferred" />
+          <RegimenBlock items={data.alternatives} label="Alternatives" type="alternative" />
+          {data.note &&
+          <div className="regimen-section">
+              <div className="reg-title">Special Considerations</div>
+              <div className="regimen-item note">
+                <div className="reg-drug" style={{ fontWeight: 400, fontSize: 13.5 }}>{data.note}</div>
+              </div>
+            </div>
+          }
+          <div style={{ marginTop: 20 }}>
+            <div className="reg-title">Coverage Profile</div>
+            <Chips types={data.coverageTypes} />
+          </div>
+          <div className="duration-box">
+            <div className="dur-num">{data.duration}</div>
+            <div className="dur-label">
+              <strong>days of antibiotic therapy</strong><br />
+              {data.durationNote}
+            </div>
+          </div>
+        </div>
+      </div>
+      <button className="restart-btn" onClick={onRestart}>Start New Query</button>
+    </div>);
+
+}
+
+const STEPS = [
+{
+  id: "acquisition",
+  label: "Acquisition Setting",
+  tag: "Step 1 of 3",
+  question: "Where was this infection acquired?",
+  options: [
+  { value: "community", label: "Community-acquired", sub: "No healthcare contact in prior 90 days" },
+  { value: "healthcare", label: "Healthcare-associated", sub: "Hospitalized, recent surgery, long-term care, or prior antibiotics" }]
+
+},
+{
+  id: "risk",
+  label: "Severity / Risk",
+  tag: "Step 2 of 3",
+  question: "What is the patient's risk level?",
+  options: [
+  { value: "lower", label: "Lower risk", sub: "Stable, no ICU, APACHE II < 10, younger patient" },
+  { value: "higher", label: "Higher risk / critically ill", sub: "ICU, APACHE II ≥ 10, immunosuppressed, MDRO concern, prior antibiotics" }]
+
+},
+{
+  id: "allergy",
+  label: "β-Lactam Allergy",
+  tag: "Step 3 of 3",
+  question: "Does the patient have a significant β-lactam allergy?",
+  options: [
+  { value: "none", label: "No allergy", sub: "No documented penicillin / cephalosporin / carbapenem allergy" },
+  { value: "allergy", label: "β-Lactam allergy", sub: "Documented allergy — avoid penicillins, cephalosporins, carbapenems" }]
+
+}];
+
+
+function GuidedTab() {
+  const [stepIdx, setStepIdx] = useState(0);
+  const [answers, setAnswers] = useState({});
+  const done = stepIdx >= STEPS.length;
+
+  function pick(value) {
+    const step = STEPS[stepIdx];
+    const newAnswers = { ...answers, [step.id]: value };
+    setAnswers(newAnswers);
+    setStepIdx(stepIdx + 1);
+  }
+
+  function restart() {
+    setStepIdx(0);
+    setAnswers({});
+  }
+
+  function goBack() {
+    if (stepIdx > 0) {
+      const prevStep = STEPS[stepIdx - 1];
+      const newAnswers = { ...answers };
+      delete newAnswers[prevStep.id];
+      setAnswers(newAnswers);
+      setStepIdx(stepIdx - 1);
+    }
+  }
+
+  return (
+    <div>
+      {/* Stepper */}
+      <div className="stepper-track">
+        {STEPS.map((s, i) => {
+          const status = i < stepIdx ? 'done' : i === stepIdx && !done ? 'active' : '';
+          return (
+            <React.Fragment key={s.id}>
+              <div className={`step-item ${status}`}>
+                <div className="step-num">{i < stepIdx ? '✓' : i + 1}</div>
+                {s.label}
+              </div>
+              {i < STEPS.length - 1 && <div className="step-connector" />}
+            </React.Fragment>);
+
+        })}
+      </div>
+
+      {done ?
+      <ResultView answers={answers} onRestart={restart} /> :
+
+      <div>
+          {stepIdx > 0 &&
+        <button className="back-btn" onClick={goBack}>← Back</button>
+        }
+          <div className="question-card">
+            <div className="question-label">
+              <span className="step-tag">{STEPS[stepIdx].tag}</span>
+              {STEPS[stepIdx].question}
+            </div>
+            <div className="option-grid">
+              {STEPS[stepIdx].options.map((opt) =>
+            <button key={opt.value} className="option-btn" onClick={() => pick(opt.value)}>
+                  {opt.label}
+                  {opt.sub && <span className="opt-icon">{opt.sub}</span>}
+                </button>
+            )}
+            </div>
+          </div>
+        </div>
+      }
+    </div>);
+
+}
+
+// ── Common Source Detail Data ─────────────────────────────
+const SOURCE_DETAILS = {
+  "Appendicitis": {
+    subtitle: "Perforated appendicitis — leading community-acquired source",
+    organisms: [
+    { name: "Escherichia coli", note: "Dominant pathogen; ~46% of isolates" },
+    { name: "Streptococcus anginosus group", note: "Abscess-forming; common in young patients" },
+    { name: "Bacteroides fragilis group", note: "Anaerobe; predominant with perforation" },
+    { name: "Peptostreptococcus spp.", note: "Gram-positive anaerobe" },
+    { name: "Klebsiella pneumoniae", note: "~10% of isolates" }],
+
+    preferred: [
+    { drug: "Ceftriaxone + Metronidazole", trade: "Rocephin + Flagyl", note: "First-line for community-acquired, lower-risk" },
+    { drug: "Ertapenem", trade: "Invanz", note: "Monotherapy alternative; once daily" }],
+
+    alternatives: [
+    { drug: "Piperacillin–Tazobactam", trade: "Zosyn", note: "If higher severity or ESBL concern" },
+    { drug: "Ciprofloxacin + Metronidazole", trade: "Cipro + Flagyl", note: "β-lactam allergy" }],
+
+    duration: "≤4 days after source control (appendectomy/drainage). ≤24 hrs if non-perforated."
+  },
+  "Cholecystitis": {
+    subtitle: "Complicated cholecystitis with biliary perforation or infection",
+    organisms: [
+    { name: "Escherichia coli", note: "Most common biliary pathogen" },
+    { name: "Klebsiella pneumoniae", note: "Common in biliary infections" },
+    { name: "Enterococcus faecalis", note: "Frequent in biliary tract; requires pip-tazo or IMP for coverage" },
+    { name: "Bacteroides fragilis group", note: "With gangrenous or perforated cholecystitis" },
+    { name: "Clostridium spp.", note: "Emphysematous cholecystitis" }],
+
+    preferred: [
+    { drug: "Piperacillin–Tazobactam", trade: "Zosyn", note: "Covers enterococci; preferred if higher risk" },
+    { drug: "Ceftriaxone + Metronidazole", trade: "Rocephin + Flagyl", note: "Lower-risk, community-acquired" }],
+
+    alternatives: [
+    { drug: "Ertapenem", trade: "Invanz", note: "Does NOT cover Enterococcus — use only if lower-risk" },
+    { drug: "Imipenem–Cilastatin", trade: "Primaxin", note: "Covers Enterococcus; for higher severity" }],
+
+    duration: "≤24 hrs if uncomplicated (non-perforated) cholecystitis. ≤4 days if perforated/abscess with source control."
+  },
+  "Diverticulitis": {
+    subtitle: "Perforated diverticulitis — tends to harbor more resistant organisms",
+    organisms: [
+    { name: "Escherichia coli", note: "Dominant; ESBL-producing strains increasing" },
+    { name: "Bacteroides fragilis group", note: "Predominant anaerobe; distal GI source" },
+    { name: "Enterococcus spp.", note: "More common vs. proximal GI sources" },
+    { name: "Klebsiella pneumoniae", note: "Including ESBL-producing strains" },
+    { name: "Clostridium spp.", note: "Anaerobic; distal GI flora" }],
+
+    preferred: [
+    { drug: "Piperacillin–Tazobactam", trade: "Zosyn", note: "Higher-risk or elderly patients" },
+    { drug: "Ceftriaxone + Metronidazole", trade: "Rocephin + Flagyl", note: "Lower-risk, community-acquired" }],
+
+    alternatives: [
+    { drug: "Meropenem", trade: "Merrem", note: "If ESBL suspected (prior antibiotics, healthcare contact)" },
+    { drug: "Ceftazidime–Avibactam + Metronidazole", trade: "Avycaz + Flagyl", note: "Confirmed ESBL or carbapenem-sparing" }],
+
+    duration: "≤4 days after source control. Percutaneous drainage + antibiotics for contained abscesses ≥4 cm."
+  },
+  "Postoperative": {
+    subtitle: "Post-surgical IAI — Crohn's, hepatobiliary, colorectal surgery",
+    organisms: [
+    { name: "Enterococcus spp. (incl. VRE)", note: "Increased prevalence vs. community-acquired" },
+    { name: "Staphylococcus aureus (MRSA)", note: "Especially after abdominal wall procedures" },
+    { name: "Pseudomonas aeruginosa", note: "Prior antibiotics, prolonged hospitalization" },
+    { name: "Candida spp.", note: "After broad-spectrum antibiotics; upper GI anastomotic leak" },
+    { name: "ESBL Enterobacteriaceae", note: "Prior antibiotic exposure" }],
+
+    preferred: [
+    { drug: "Piperacillin–Tazobactam ± Vancomycin", trade: "Zosyn ± Vancocin", note: "Add vancomycin for MRSA risk" },
+    { drug: "Meropenem + Vancomycin", trade: "Merrem + Vancocin", note: "If MDRO or critically ill" }],
+
+    alternatives: [
+    { drug: "Ceftazidime–Avibactam + Metronidazole", trade: "Avycaz + Flagyl", note: "Carbapenem-sparing for ESBL" },
+    { drug: "Echinocandin (add-on)", trade: "Micafungin / Caspofungin", note: "Add if Candida peritonitis risk (upper GI leak + prior abx)" }],
+
+    duration: "≤4 days after source control; up to ≤8 days if ICU/critically ill (SIS 2024). ID consultation recommended."
+  },
+  "Pyogenic Liver Abscess": {
+    subtitle: "Most common visceral abscess; biliary spread or hematogenous seeding",
+    organisms: [
+    { name: "Klebsiella pneumoniae", note: "Dominant in Asia-Pacific; can cause metastatic endophthalmitis" },
+    { name: "Escherichia coli", note: "Biliary source; most common in Western populations" },
+    { name: "Streptococcus anginosus group", note: "Hematogenous seeding from dental/GI source" },
+    { name: "Bacteroides fragilis group", note: "Anaerobic; biliary or portal venous source" },
+    { name: "Enterococcus spp.", note: "Biliary source" }],
+
+    preferred: [
+    { drug: "Ceftriaxone + Metronidazole", trade: "Rocephin + Flagyl", note: "Community-acquired, culture-guided preferred" },
+    { drug: "Piperacillin–Tazobactam", trade: "Zosyn", note: "Higher-risk or biliary source with enterococcal concern" }],
+
+    alternatives: [
+    { drug: "Meropenem", trade: "Merrem", note: "Severe sepsis, ESBL Klebsiella, or healthcare-associated" },
+    { drug: "Ciprofloxacin + Metronidazole", trade: "Cipro + Flagyl", note: "β-lactam allergy; step-down oral option" }],
+
+    duration: "Prolonged — typically 4–6 weeks total (IV then oral step-down). Percutaneous drainage or aspiration required for abscesses >3–5 cm."
+  },
+  "Trauma": {
+    subtitle: "Penetrating or blunt abdominal trauma with bowel injury",
+    organisms: [
+    { name: "Escherichia coli", note: "Colonic/small bowel contamination" },
+    { name: "Bacteroides fragilis group", note: "Colonic perforation; anaerobic predominance" },
+    { name: "Enterococcus spp.", note: "Colonic source" },
+    { name: "Staphylococcus aureus", note: "Skin flora; wound contamination" },
+    { name: "Clostridium spp.", note: "Soil/environmental contamination in open trauma" }],
+
+    preferred: [
+    { drug: "Ceftriaxone + Metronidazole", trade: "Rocephin + Flagyl", note: "Immediate perioperative prophylaxis / early treatment" },
+    { drug: "Piperacillin–Tazobactam", trade: "Zosyn", note: "Established infection or delayed presentation" }],
+
+    alternatives: [
+    { drug: "Imipenem–Cilastatin", trade: "Primaxin", note: "Heavy fecal contamination or prior antibiotic exposure" },
+    { drug: "Aztreonam + Metronidazole + Vancomycin", trade: "Azactam + Flagyl + Vancocin", note: "β-lactam allergy" }],
+
+    duration: "≤24 hrs if early source control with minimal contamination. ≤4 days if established infection. Reassess at 48–72 hrs."
+  }
+};
+
+function MicroTab() {
+  const [selected, setSelected] = useState(null);
+
+  const sources = [
+  { name: "Appendicitis", detail: "Leading cause; perforated appendicitis, esp. community-acquired" },
+  { name: "Cholecystitis", detail: "36% in one series; complicated cholecystitis with biliary infection" },
+  { name: "Diverticulitis", detail: "Colonic perforation; tends to harbor more resistant organisms" },
+  { name: "Postoperative", detail: "10–28% with Crohn's surgery; up to 25% after hepatectomy" },
+  { name: "Pyogenic Liver Abscess", detail: "~50% of all visceral abscesses; biliary spread or hematogenous" },
+  { name: "Trauma", detail: "Penetrating or blunt abdominal trauma" }];
+
+
+  function toggleSource(name) {
+    setSelected((prev) => prev === name ? null : name);
+  }
+
+  const detail = selected ? SOURCE_DETAILS[selected] : null;
+
+  return (
+    <div>
+      <p className="section-sub">Polymicrobial infections reflecting enteric flora; pathogen profile varies by GI source location and acquisition setting.</p>
+
+      <div className="micro-grid">
+        <div className="micro-card">
+          <div className="micro-card-head community">Community-Acquired</div>
+          <div className="micro-card-body">
+            <div className="org-group">
+              <div className="org-group-title">Gram-negative aerobes</div>
+              <ul className="org-list">
+                <li><em>Escherichia coli</em> <span className="pct">~46% of isolates</span></li>
+                <li><em>Klebsiella pneumoniae</em> <span className="pct">~10%</span></li>
+                <li>Other Enterobacteriaceae</li>
+              </ul>
+            </div>
+            <div className="org-group">
+              <div className="org-group-title">Anaerobes</div>
+              <ul className="org-list">
+                <li><em>Bacteroides fragilis</em> group <span className="pct">(predominant)</span></li>
+                <li><em>Peptostreptococcus</em> spp.</li>
+                <li><em>Clostridium</em> spp.</li>
+              </ul>
+            </div>
+            <div className="org-group">
+              <div className="org-group-title">Gram-positive aerobes</div>
+              <ul className="org-list">
+                <li><em>Streptococcus</em> (S. anginosus/milleri group)</li>
+                <li><em>Enterococcus faecalis</em> <span className="pct">~9%</span></li>
+              </ul>
+            </div>
+            <div className="org-group">
+              <div className="org-group-title">Emerging resistance</div>
+              <ul className="org-list">
+                <li>ESBL-producing Enterobacteriaceae <span className="pct">up to 30% of GN isolates</span></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <div className="micro-card">
+          <div className="micro-card-head healthcare">Healthcare-Associated (Shift)</div>
+          <div className="micro-card-body">
+            <div className="org-group">
+              <div className="org-group-title">Resistant gram-negatives</div>
+              <ul className="org-list">
+                <li><em>Pseudomonas aeruginosa</em></li>
+                <li><em>Enterobacter</em> spp.</li>
+                <li><em>Acinetobacter</em> spp.</li>
+                <li>ESBL-producing Enterobacteriaceae</li>
+              </ul>
+            </div>
+            <div className="org-group">
+              <div className="org-group-title">Resistant gram-positives</div>
+              <ul className="org-list">
+                <li>Enterococcus spp. (incl. VRE)</li>
+                <li><em>Staphylococcus aureus</em> (incl. MRSA)</li>
+              </ul>
+            </div>
+            <div className="org-group">
+              <div className="org-group-title">Fungi</div>
+              <ul className="org-list">
+                <li><em>Candida</em> spp. <span className="pct">esp. after prior broad-spectrum antibiotics</span></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div className="section-heading" style={{ fontSize: 16, marginBottom: 6 }}>Common Sources</div>
+      <p style={{ fontSize: 13, color: 'var(--ink-light)', fontStyle: 'italic', marginBottom: 12, fontFamily: 'var(--serif)' }}>Click any source to see typical organisms and recommended treatment.</p>
+      <div className="sources-grid">
+        {sources.map((s) =>
+        <div
+          key={s.name}
+          className={`source-tile${selected === s.name ? ' selected' : ''}`}
+          onClick={() => toggleSource(s.name)}
+          role="button"
+          tabIndex={0}
+          onKeyDown={(e) => e.key === 'Enter' && toggleSource(s.name)}>
+          
+            <div className="st-name">{s.name}</div>
+            <div className="st-detail">{s.detail}</div>
+            <div className="st-arrow">{selected === s.name ? '▲ Close' : '▼ Details'}</div>
+          </div>
+        )}
+      </div>
+
+      {detail &&
+      <div className="source-detail">
+          <div className="sd-header">
+            <div>
+              <h3>{selected}</h3>
+              <div className="sd-sub">{detail.subtitle}</div>
+            </div>
+            <button className="sd-close" onClick={() => setSelected(null)} aria-label="Close">×</button>
+          </div>
+          <div className="sd-body">
+            <div>
+              <div className="sd-section-title">Typical Organisms</div>
+              <ul className="sd-org-list">
+                {detail.organisms.map((o, i) =>
+              <li key={i}>
+                    <em>{o.name}</em>
+                    {o.note && <span className="pct"> — {o.note}</span>}
+                  </li>
+              )}
+              </ul>
+            </div>
+            <div>
+              <div className="sd-section-title">Recommended Treatment</div>
+              <ul className="sd-regimen-list">
+                {detail.preferred.map((r, i) =>
+              <li key={i} className="sd-regimen-item">
+                    <div className="sd-drug">{r.drug} <span className="sd-drug-trade">({r.trade})</span></div>
+                    {r.note && <div className="sd-drug-note">{r.note}</div>}
+                  </li>
+              )}
+                {detail.alternatives.map((r, i) =>
+              <li key={i} className="sd-regimen-item alt">
+                    <div className="sd-drug">{r.drug} <span className="sd-drug-trade">({r.trade})</span></div>
+                    {r.note && <div className="sd-drug-note">{r.note}</div>}
+                  </li>
+              )}
+              </ul>
+              <div style={{ marginTop: 14, padding: '10px 13px', background: 'var(--gold-light)', borderRadius: 4, borderLeft: '3px solid var(--gold)', fontSize: 13, color: 'var(--ink-mid)', lineHeight: 1.5 }}>
+                <strong style={{ color: 'var(--ink)', display: 'block', marginBottom: 2 }}>Duration</strong>
+                {detail.duration}
+              </div>
+            </div>
+          </div>
+        </div>
+      }
+    </div>);
+
+}
+
+// ── Pathogen Coverage Matrix Data ─────────────────────────
+// Activity levels: 4=Active, 3=Variable/partial, 2=Weak/limited, 1=No activity, 'S'=Special note
+// Drugs: CTX=Ceftriaxone, ERT=Ertapenem, PIP=Pip-Tazo, FEP=Cefepime, MER=Meropenem, IMP=Imipenem,
+//        CIP=Ciprofloxacin, MOX=Moxifloxacin, AZT=Aztreonam, VAN=Vancomycin, CAZ=Ceftaz-Avib, MTZ=Metronidazole
+
+const DRUGS = [
+{ id: "CTX", label: "Ceftriaxone", trade: "Rocephin" },
+{ id: "ERT", label: "Ertapenem", trade: "Invanz" },
+{ id: "PIP", label: "Pip–Tazo", trade: "Zosyn" },
+{ id: "FEP", label: "Cefepime", trade: "Maxipime" },
+{ id: "MER", label: "Meropenem", trade: "Merrem" },
+{ id: "IMP", label: "Imipenem", trade: "Primaxin" },
+{ id: "CIP", label: "Ciprofloxacin", trade: "Cipro" },
+{ id: "MOX", label: "Moxifloxacin", trade: "Avelox" },
+{ id: "AZT", label: "Aztreonam", trade: "Azactam" },
+{ id: "VAN", label: "Vancomycin", trade: "Vancocin" },
+{ id: "CAZ", label: "Ceftaz–Avibactam", trade: "Avycaz" },
+{ id: "MTZ", label: "Metronidazole", trade: "Flagyl" }];
+
+
+const PATHOGEN_GROUPS = [
+{
+  group: "Gram-Negative Aerobes",
+  pathogens: [
+  { name: "Escherichia coli", sub: "Most common; ~46% of isolates",
+    CTX: 4, ERT: 4, PIP: 4, FEP: 4, MER: 4, IMP: 4, CIP: 3, MOX: 3, AZT: 4, VAN: 1, CAZ: 4, MTZ: 1 },
+  { name: "E. coli (ESBL-producing)", sub: "Up to 30% of GN isolates",
+    CTX: 1, ERT: 4, PIP: 2, FEP: 2, MER: 4, IMP: 4, CIP: 2, MOX: 2, AZT: 1, VAN: 1, CAZ: 4, MTZ: 1 },
+  { name: "Klebsiella pneumoniae", sub: "~10% of isolates",
+    CTX: 4, ERT: 4, PIP: 4, FEP: 4, MER: 4, IMP: 4, CIP: 3, MOX: 3, AZT: 4, VAN: 1, CAZ: 4, MTZ: 1 },
+  { name: "Klebsiella (ESBL-producing)", sub: "Healthcare-associated",
+    CTX: 1, ERT: 4, PIP: 2, FEP: 2, MER: 4, IMP: 4, CIP: 2, MOX: 2, AZT: 1, VAN: 1, CAZ: 4, MTZ: 1 },
+  { name: "Pseudomonas aeruginosa", sub: "Healthcare-associated; intrinsic resistance",
+    CTX: 1, ERT: 1, PIP: 4, FEP: 4, MER: 4, IMP: 4, CIP: 4, MOX: 1, AZT: 4, VAN: 1, CAZ: 4, MTZ: 1 },
+  { name: "Enterobacter spp.", sub: "AmpC inducible; healthcare-associated",
+    CTX: 2, ERT: 4, PIP: 3, FEP: 4, MER: 4, IMP: 4, CIP: 3, MOX: 3, AZT: 2, VAN: 1, CAZ: 4, MTZ: 1 },
+  { name: "Acinetobacter spp.", sub: "Multidrug-resistant; ICU-associated",
+    CTX: 1, ERT: 2, PIP: 2, FEP: 2, MER: 3, IMP: 3, CIP: 2, MOX: 1, AZT: 1, VAN: 1, CAZ: 2, MTZ: 1 }]
+
+},
+{
+  group: "Gram-Positive Aerobes",
+  pathogens: [
+  { name: "Streptococcus anginosus group", sub: "S. milleri group; common in abscesses",
+    CTX: 4, ERT: 4, PIP: 4, FEP: 4, MER: 4, IMP: 4, CIP: 3, MOX: 4, AZT: 1, VAN: 4, CAZ: 1, MTZ: 1 },
+  { name: "Enterococcus faecalis", sub: "~9% of isolates; intrinsic ceph resistance",
+    CTX: 1, ERT: 1, PIP: 4, FEP: 1, MER: 1, IMP: 4, CIP: 2, MOX: 2, AZT: 1, VAN: 4, CAZ: 1, MTZ: 1 },
+  { name: "Enterococcus faecium (VRE)", sub: "Healthcare-associated; vancomycin-resistant",
+    CTX: 1, ERT: 1, PIP: 1, FEP: 1, MER: 1, IMP: 1, CIP: 1, MOX: 1, AZT: 1, VAN: 1, CAZ: 1, MTZ: 1,
+    note: "Requires linezolid or daptomycin" },
+  { name: "Staphylococcus aureus (MSSA)", sub: "",
+    CTX: 4, ERT: 4, PIP: 4, FEP: 4, MER: 4, IMP: 4, CIP: 3, MOX: 3, AZT: 1, VAN: 4, CAZ: 1, MTZ: 1 },
+  { name: "Staphylococcus aureus (MRSA)", sub: "Healthcare-associated",
+    CTX: 1, ERT: 1, PIP: 1, FEP: 1, MER: 1, IMP: 1, CIP: 1, MOX: 1, AZT: 1, VAN: 4, CAZ: 1, MTZ: 1 }]
+
+},
+{
+  group: "Anaerobes",
+  pathogens: [
+  { name: "Bacteroides fragilis group", sub: "Predominant anaerobe; distal GI source",
+    CTX: 1, ERT: 4, PIP: 4, FEP: 1, MER: 4, IMP: 4, CIP: 1, MOX: 3, AZT: 1, VAN: 1, CAZ: 1, MTZ: 4 },
+  { name: "Peptostreptococcus spp.", sub: "Gram-positive anaerobe",
+    CTX: 4, ERT: 4, PIP: 4, FEP: 4, MER: 4, IMP: 4, CIP: 2, MOX: 4, AZT: 1, VAN: 4, CAZ: 1, MTZ: 4 },
+  { name: "Clostridium spp.", sub: "Spore-forming; distal GI source",
+    CTX: 3, ERT: 4, PIP: 4, FEP: 3, MER: 4, IMP: 4, CIP: 1, MOX: 3, AZT: 1, VAN: 3, CAZ: 1, MTZ: 4 }]
+
+},
+{
+  group: "Fungi",
+  pathogens: [
+  { name: "Candida albicans", sub: "Upper GI perforation; prior broad-spectrum abx",
+    CTX: 1, ERT: 1, PIP: 1, FEP: 1, MER: 1, IMP: 1, CIP: 1, MOX: 1, AZT: 1, VAN: 1, CAZ: 1, MTZ: 1,
+    note: "Requires echinocandin (micafungin, caspofungin) or fluconazole" },
+  { name: "Candida non-albicans", sub: "Increasingly fluconazole-resistant",
+    CTX: 1, ERT: 1, PIP: 1, FEP: 1, MER: 1, IMP: 1, CIP: 1, MOX: 1, AZT: 1, VAN: 1, CAZ: 1, MTZ: 1,
+    note: "Echinocandin preferred over azoles" }]
+
+}];
+
+
+const ACT_CONFIG = {
+  4: { label: "●", title: "Active", cls: "act-4" },
+  3: { label: "◐", title: "Variable", cls: "act-3" },
+  2: { label: "○", title: "Weak", cls: "act-2" },
+  1: { label: "–", title: "None", cls: "act-1" }
+};
+
+function ActCell({ level, note }) {
+  const cfg = ACT_CONFIG[level] || ACT_CONFIG[1];
+  return (
+    <div className="act-cell" title={note || cfg.title}>
+      <div className={`act-dot ${cfg.cls}`}>{cfg.label}</div>
+    </div>);
+
+}
+
+function CoverageTab() {
+  const [filter, setFilter] = useState("all");
+
+  const filterOptions = [
+  { id: "all", label: "All organisms" },
+  { id: "gn", label: "Gram-negative" },
+  { id: "gp", label: "Gram-positive" },
+  { id: "ana", label: "Anaerobes" },
+  { id: "fungi", label: "Fungi" },
+  { id: "resistant", label: "Resistant / MDR" }];
+
+
+  const filterMap = {
+    all: () => true,
+    gn: (g) => g.group === "Gram-Negative Aerobes",
+    gp: (g) => g.group === "Gram-Positive Aerobes",
+    ana: (g) => g.group === "Anaerobes",
+    fungi: (g) => g.group === "Fungi",
+    resistant: (g, p) => p.name.includes("ESBL") || p.name.includes("MRSA") || p.name.includes("VRE") || p.name.includes("Acinetobacter") || p.name.includes("non-albicans")
+  };
+
+  const visibleGroups = PATHOGEN_GROUPS.map((g) => ({
+    ...g,
+    pathogens: g.pathogens.filter((p) => {
+      if (filter === "resistant") return filterMap.resistant(g, p);
+      return filterMap[filter](g);
+    })
+  })).filter((g) => g.pathogens.length > 0);
+
+  return (
+    <div>
+      <p className="section-sub">Activity of key intra-abdominal infection antibiotics against common pathogens. Based on typical susceptibility patterns — always defer to local antibiogram and culture results.</p>
+
+      <div className="matrix-filter-row">
+        <span className="filter-label">Filter:</span>
+        {filterOptions.map((f) =>
+        <button key={f.id}
+        className={`filter-chip ${filter === f.id ? 'active' : ''}`}
+        onClick={() => setFilter(f.id)}>
+            {f.label}
+          </button>
+        )}
+      </div>
+
+      <div className="matrix-wrap">
+        <table className="matrix-table">
+          <thead>
+            <tr>
+              <th style={{ textAlign: 'left' }}>Pathogen</th>
+              {DRUGS.map((d) =>
+              <th key={d.id} title={d.label + ' (' + d.trade + ')'}>
+                  <div>{d.id}</div>
+                  <div style={{ fontSize: 9, fontWeight: 400, opacity: 0.7, marginTop: 2 }}>{d.trade}</div>
+                </th>
+              )}
+            </tr>
+          </thead>
+          <tbody>
+            {visibleGroups.map((g) =>
+            <React.Fragment key={g.group}>
+                <tr className="group-spacer-row">
+                  <td className="group-spacer" colSpan={DRUGS.length + 1}>{g.group}</td>
+                </tr>
+                {g.pathogens.map((p) =>
+              <tr key={p.name}>
+                    <td>
+                      <span className="pathogen-name">{p.name}</span>
+                      {p.sub && <span className="pathogen-sub">{p.sub}</span>}
+                      {p.note && <span className="pathogen-sub" style={{ color: 'var(--crimson)', fontStyle: 'normal', fontWeight: 500 }}>{p.note}</span>}
+                    </td>
+                    {DRUGS.map((d) =>
+                <td key={d.id}>
+                        <ActCell level={p[d.id]} note={p.note} />
+                      </td>
+                )}
+                  </tr>
+              )}
+              </React.Fragment>
+            )}
+          </tbody>
+        </table>
+        <div className="matrix-legend">
+          {Object.entries(ACT_CONFIG).reverse().map(([lvl, cfg]) =>
+          <div key={lvl} className="legend-item">
+              <div className={`act-dot ${cfg.cls}`} style={{ width: 18, height: 18, fontSize: 10 }}>{cfg.label}</div>
+              {cfg.title}
+            </div>
+          )}
+          <div className="legend-item" style={{ marginLeft: 'auto', fontStyle: 'italic', fontSize: 11 }}>
+            Based on typical susceptibility — always verify with local antibiogram
+          </div>
+        </div>
+      </div>
+    </div>);
+
+}
+
+function DurationTab() {
+  return (
+    <div>
+      <div className="stopit-box">
+        <h3>STOP-IT Trial — NEJM 2015</h3>
+        <div className="stopit-stat-row">
+          <div className="stat-block">
+            <div className="stat-num">4</div>
+            <div className="stat-desc">days (experimental arm)</div>
+          </div>
+          <div className="stat-block">
+            <div className="stat-num">~8</div>
+            <div className="stat-desc">days (control arm, physiology-guided)</div>
+          </div>
+          <div className="stat-block">
+            <div className="stat-num">21.8%</div>
+            <div className="stat-desc">vs 22.3% composite outcome — no significant difference</div>
+          </div>
+        </div>
+        <div className="stopit-quote">
+          "A fixed duration of 4 days of antibiotic treatment resulted in outcomes that were similar to those of a traditional, longer course…and the shorter course was associated with significantly fewer days of antibiotic exposure."
+          <cite>— Sawyer RG et al., NEJM 2015</cite>
+        </div>
+        <p style={{ fontSize: 13, color: 'var(--ink-mid)', marginBottom: 10 }}>Primary composite outcome: surgical-site infection, recurrent IAI, or death. Consistent across all key subgroups:</p>
+        <img src={window.__resources.stopitImg} alt="STOP-IT subgroup forest plot" className="forest-img" />
+      </div>
+
+      <div className="duration-table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Clinical Scenario</th>
+              <th>Recommended Duration</th>
+              <th>Guideline</th>
+            </tr>
+          </thead>
+          <tbody>
+            {[
+            { scenario: "Adequate source control achieved", dur: "≤4 days", note: "(96 hours)", guideline: "SIS 2017" },
+            { scenario: "Source control not possible", dur: "5–7 days", note: "with reassessment for intervention", guideline: "SIS 2017" },
+            { scenario: "Critically ill (ICU)", dur: "≤8 days", note: "after source control", guideline: "SIS 2024 update" },
+            { scenario: "Secondary bacteremia from IAI", dur: "≤7 days", note: "if source controlled and afebrile/afebrile off pressors", guideline: "SIS 2017" },
+            { scenario: "Uncomplicated IAI (non-perforated appendicitis / cholecystitis)", dur: "≤24 hrs", note: "postoperatively", guideline: "SIS 2017" }].
+            map((row, i) =>
+            <tr key={i}>
+                <td>{row.scenario}</td>
+                <td>
+                  <span className="dur-highlight">{row.dur}</span>
+                  <span style={{ fontSize: 12, color: 'var(--ink-light)' }}>{row.note}</span>
+                </td>
+                <td style={{ color: 'var(--ink-light)', fontSize: 13 }}>{row.guideline}</td>
+              </tr>
+            )}
+          </tbody>
+        </table>
+      </div>
+
+      <div style={{ background: 'white', border: '1px solid var(--cream-border)', borderRadius: 6, padding: '20px 24px' }}>
+        <div style={{ fontFamily: 'var(--serif)', fontSize: 15, fontWeight: 600, marginBottom: 14 }}>Pharmacologic Notes</div>
+        {[
+        { drug: "Piperacillin–Tazobactam", note: "Highest abscess penetration ratio in prospective study (median CIAA/Cplasma = 2); 75–80% PD target achievement, comparable to meropenem." },
+        { drug: "Cefepime + Metronidazole", note: "Network meta-analysis of 45 RCTs (n=14,267): most effective overall for complicated IAI; lower all-cause mortality vs. tigecycline." },
+        { drug: "Tigecycline", note: "Associated with higher all-cause mortality vs. comparators in network meta-analysis — avoid as primary agent." },
+        { drug: "Empiric antifungals", note: "Not generally recommended. Exception: critically ill ICU patients with upper GI perforation and prior broad-spectrum antibiotic exposure (Candida peritonitis risk)." }].
+        map((item, i) =>
+        <div key={i} style={{ marginBottom: i < 3 ? 12 : 0, paddingBottom: i < 3 ? 12 : 0, borderBottom: i < 3 ? '1px solid var(--cream-border)' : 'none', display: 'flex', gap: 12 }}>
+            <div style={{ flex: 1 }}>
+              <div style={{ fontWeight: 600, fontSize: 14 }}>{item.drug}</div>
+              <div style={{ fontSize: 13, color: 'var(--ink-mid)', marginTop: 3, lineHeight: 1.5 }}>{item.note}</div>
+            </div>
+          </div>
+        )}
+      </div>
+    </div>);
+
+}
+
+function App() {
+  const [t, setTweak] = useTweaks(TWEAK_DEFAULTS);
+  const [tab, setTab] = useState("guided");
+
+  const tabs = [
+  { id: "guided", label: "Antibiotic Selector" },
+  { id: "micro", label: "Microbiology & Sources" },
+  { id: "coverage", label: "Pathogen Coverage" },
+  { id: "duration", label: "Duration of Therapy" }];
+
+
+  return (
+    <div id="root-inner" style={{ fontSize: `${t.fontScale * 15}px` }}>
+      <header className="site-header">
+        <h1>Reversible Electroporation + Antibiotic Lavage (REAL Therapies)</h1>
+        <span className="subtitle">Antibiotic Management Reference</span>
+        <span className="badge">SIS 2017 / 2024 · STOP-IT</span>
+      </header>
+
+      <nav className="tab-nav">
+        {tabs.map((tab2) =>
+        <button
+          key={tab2.id}
+          className={`tab-btn ${tab === tab2.id ? 'active' : ''}`}
+          onClick={() => setTab(tab2.id)}>
+          
+            {tab2.label}
+          </button>
+        )}
+      </nav>
+
+      <main className="page-content">
+        {tab === "guided" && <GuidedTab />}
+        {tab === "micro" && <MicroTab />}
+        {tab === "coverage" && <CoverageTab />}
+        {tab === "duration" && <DurationTab />}
+
+        {t.showReferences &&
+        <div className="ref-section">
+            <div className="ref-title">Key References</div>
+            <ul className="ref-list">
+              {REFS.map((r) =>
+            <li key={r.num}>
+                  <span className="ref-num">[{r.num}]</span>
+                  <span>{r.text}</span>
+                </li>
+            )}
+            </ul>
+          </div>
+        }
+      </main>
+
+      <TweaksPanel>
+        <TweakSection label="Display" />
+        <TweakSlider label="Font Scale" value={t.fontScale} min={0.85} max={1.25} step={0.05}
+        onChange={(v) => setTweak('fontScale', v)} />
+        <TweakToggle label="Show References" value={t.showReferences}
+        onChange={(v) => setTweak('showReferences', v)} />
+      </TweaksPanel>
+    </div>);
+
+}
+
+const root = ReactDOM.createRoot(document.getElementById('root'));
+root.render(<App />);
+</script>
+<template id="__bundler_thumbnail" data-bg-color="#f5f0e8">
+  <svg viewBox="0 0 800 500" xmlns="http://www.w3.org/2000/svg">
+    <!-- Header bar -->
+    <rect x="0" y="0" width="800" height="60" fill="#2a2420"/>
+    <rect x="0" y="57" width="800" height="3" fill="#c0483a"/>
+    <rect x="40" y="18" width="180" height="14" rx="4" fill="#f5f0e8" opacity="0.9"/>
+    <rect x="40" y="38" width="120" height="8" rx="3" fill="#c0483a" opacity="0.6"/>
+    <!-- Tab nav -->
+    <rect x="0" y="60" width="800" height="44" fill="#ede8df"/>
+    <rect x="40" y="72" width="120" height="20" rx="3" fill="none" stroke="#c0483a" strokeWidth="2"/>
+    <rect x="40" y="92" width="120" height="3" rx="1" fill="#c0483a"/>
+    <rect x="180" y="74" width="100" height="16" rx="3" fill="#bbb" opacity="0.4"/>
+    <rect x="300" y="74" width="120" height="16" rx="3" fill="#bbb" opacity="0.4"/>
+    <rect x="440" y="74" width="120" height="16" rx="3" fill="#bbb" opacity="0.4"/>
+    <!-- Content area -->
+    <rect x="0" y="104" width="800" height="396" fill="#f5f0e8"/>
+    <!-- Step indicators -->
+    <rect x="40" y="130" width="220" height="6" rx="3" fill="#e0d8cc"/>
+    <rect x="40" y="130" width="70" height="6" rx="3" fill="#c0483a"/>
+    <!-- Question card -->
+    <rect x="40" y="154" width="720" height="120" rx="8" fill="white" stroke="#e0d8cc" strokeWidth="1"/>
+    <rect x="60" y="172" width="60" height="8" rx="3" fill="#c0483a" opacity="0.6"/>
+    <rect x="60" y="188" width="300" height="16" rx="4" fill="#2a2420"/>
+    <rect x="60" y="212" width="200" height="10" rx="3" fill="#bbb" opacity="0.6"/>
+    <!-- Option buttons -->
+    <rect x="40" y="290" width="340" height="70" rx="8" fill="white" stroke="#e0d8cc" strokeWidth="1.5"/>
+    <rect x="60" y="308" width="120" height="12" rx="3" fill="#2a2420"/>
+    <rect x="60" y="326" width="200" height="9" rx="3" fill="#bbb" opacity="0.6"/>
+    <rect x="420" y="290" width="340" height="70" rx="8" fill="white" stroke="#e0d8cc" strokeWidth="1.5"/>
+    <rect x="440" y="308" width="140" height="12" rx="3" fill="#2a2420"/>
+    <rect x="440" y="326" width="200" height="9" rx="3" fill="#bbb" opacity="0.6"/>
+  </svg>
+</template>
+</body>
+</html>

@@ -1,0 +1,40 @@
+{
+  "name": "REAL Therapies — Abdominal Abscess",
+  "short_name": "REAL Therapies",
+  "description": "Abdominal abscess antibiotic management — SIS 2017/2024 & STOP-IT evidence",
+  "start_url": "./REAL Therapies App.html",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#1a1614",
+  "theme_color": "#1a1614",
+  "categories": ["medical", "education"],
+  "icons": [
+    {
+      "src": "icons/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "icons/icon-180.png",
+      "sizes": "180x180",
+      "type": "image/png",
+      "purpose": "any"
+    }
+  ],
+  "screenshots": [
+    {
+      "src": "icons/screenshot.png",
+      "sizes": "393x852",
+      "type": "image/png",
+      "form_factor": "narrow",
+      "label": "Home screen"
+    }
+  ]
+}

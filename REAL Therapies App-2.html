@@ -1,0 +1,2115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>REAL Therapies — Abdominal Abscess</title>
+
+<!-- PWA essentials -->
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#1a1614">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="REAL Therapies">
+<meta name="application-name" content="REAL Therapies">
+<meta name="description" content="Abdominal abscess antibiotic management — SIS 2017/2024 &amp; STOP-IT evidence">
+
+<!-- Apple touch icons -->
+<link rel="apple-touch-icon" href="icons/icon-180.png">
+<link rel="apple-touch-icon" sizes="192x192" href="icons/icon-192.png">
+<link rel="apple-touch-icon" sizes="512x512" href="icons/icon-512.png">
+
+<!-- Favicon -->
+<link rel="icon" type="image/png" sizes="192x192" href="icons/icon-192.png">
+
+<!-- Bundler: inline the banner icon -->
+<meta name="ext-resource-dependency" content="icons/icon-192.png" data-resource-id="appIcon192" />
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,600;0,700;1,400&family=Source+Sans+3:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body {
+    height: 100%; width: 100%;
+    background: oklch(18% 0.015 50);
+    display: flex; align-items: center; justify-content: center;
+    font-family: -apple-system, 'SF Pro', system-ui, sans-serif;
+    overflow: hidden;
+  }
+  #root { display: flex; align-items: center; justify-content: center; width: 100%; height: 100%; }
+
+  /* Phone shell — shown on desktop only */
+  .phone-shell {
+    position: relative;
+    width: 393px;
+    height: 852px;
+    background: #1a1614;
+    border-radius: 54px;
+    box-shadow:
+      0 0 0 1px oklch(35% 0.01 50),
+      0 0 0 10px oklch(12% 0.01 50),
+      0 0 0 11px oklch(30% 0.01 50),
+      0 30px 80px rgba(0,0,0,0.7);
+    overflow: hidden;
+    flex-shrink: 0;
+  }
+  .phone-screen {
+    position: absolute;
+    inset: 0;
+    border-radius: 54px;
+    overflow: hidden;
+    background: oklch(97% 0.012 75);
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* On real mobile — fill the entire screen, no bezel */
+  @media (max-width: 500px) {
+    html, body { background: oklch(97% 0.012 75); }
+    .outer { width: 100%; height: 100%; gap: 0; }
+    .outer-label { display: none; }
+    .phone-shell {
+      width: 100vw;
+      height: 100%;
+      height: 100dvh;
+      border-radius: 0;
+      box-shadow: none;
+      background: oklch(97% 0.012 75);
+    }
+    .phone-screen {
+      border-radius: 0;
+      position: relative;
+      inset: auto;
+      width: 100%;
+      height: 100%;
+    }
+    /* Hide the fake dynamic island on real devices */
+    .dynamic-island { display: none; }
+    /* Hide the fake status bar — iOS provides its own */
+    .status-bar { display: none; }
+  }
+  /* Dynamic island */
+  .dynamic-island {
+    position: absolute;
+    top: 13px; left: 50%; transform: translateX(-50%);
+    width: 120px; height: 34px;
+    background: #000;
+    border-radius: 20px;
+    z-index: 100;
+  }
+  /* Scrollable screen content */
+  .screen-scroll {
+    flex: 1;
+    overflow-y: auto;
+    overflow-x: hidden;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+  }
+  .screen-scroll::-webkit-scrollbar { display: none; }
+
+  /* Status bar */
+  .status-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px 28px 0;
+    height: 54px;
+    flex-shrink: 0;
+    position: relative;
+    z-index: 10;
+  }
+  .status-time {
+    font-size: 17px;
+    font-weight: 600;
+    letter-spacing: -0.3px;
+    color: var(--ink);
+  }
+  .status-icons { display: flex; gap: 6px; align-items: center; }
+
+  /* Nav bar */
+  .nav-bar {
+    display: flex;
+    align-items: center;
+    padding: 4px 16px 8px;
+    min-height: 44px;
+    flex-shrink: 0;
+    gap: 8px;
+  }
+  .nav-back {
+    display: flex; align-items: center; gap: 3px;
+    background: none; border: none; cursor: pointer;
+    color: var(--crimson); font-size: 17px;
+    padding: 8px 4px;
+    font-family: -apple-system, system-ui, sans-serif;
+  }
+  .nav-title {
+    flex: 1;
+    text-align: center;
+    font-size: 17px;
+    font-weight: 600;
+    letter-spacing: -0.3px;
+    color: var(--ink);
+  }
+  .nav-spacer { width: 60px; }
+
+  /* Bottom tab bar */
+  .tab-bar {
+    display: flex;
+    background: oklch(97% 0.012 75 / 0.92);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-top: 0.5px solid oklch(85% 0.015 65);
+    padding: 8px 0 28px;
+    padding-bottom: max(28px, env(safe-area-inset-bottom));
+    flex-shrink: 0;
+    position: relative;
+    z-index: 50;
+  }
+  .tab-item {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 3px;
+    cursor: pointer;
+    padding: 2px 0;
+    background: none;
+    border: none;
+  }
+  .tab-icon {
+    width: 28px; height: 28px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 22px;
+  }
+  .tab-label {
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.01em;
+    color: oklch(62% 0.010 50);
+  }
+  .tab-item.active .tab-label { color: var(--crimson); }
+  .tab-item.active .tab-icon svg path,
+  .tab-item.active .tab-icon svg rect,
+  .tab-item.active .tab-icon svg circle { fill: var(--crimson); }
+
+  /* CSS vars on screen */
+  .phone-screen {
+    --cream: oklch(97% 0.012 75);
+    --cream-dark: oklch(93% 0.016 70);
+    --cream-border: oklch(87% 0.020 65);
+    --ink: oklch(22% 0.015 50);
+    --ink-mid: oklch(42% 0.012 50);
+    --ink-light: oklch(60% 0.010 50);
+    --crimson: oklch(42% 0.12 25);
+    --crimson-light: oklch(92% 0.04 25);
+    --crimson-mid: oklch(70% 0.09 25);
+    --teal: oklch(48% 0.10 185);
+    --teal-light: oklch(92% 0.04 185);
+    --gold: oklch(62% 0.10 75);
+    --gold-light: oklch(94% 0.04 75);
+    --serif: 'Lora', Georgia, serif;
+    --sans: 'Source Sans 3', system-ui, sans-serif;
+  }
+
+  /* ── HOME SCREEN ── */
+  .home-hero {
+    background: var(--ink);
+    padding: 20px 20px 28px;
+    position: relative;
+    overflow: hidden;
+  }
+  .home-hero::before {
+    content: '';
+    position: absolute;
+    top: -40px; right: -40px;
+    width: 160px; height: 160px;
+    border-radius: 50%;
+    background: var(--crimson);
+    opacity: 0.15;
+  }
+  .home-hero::after {
+    content: '';
+    position: absolute;
+    bottom: -30px; left: 20px;
+    width: 100px; height: 100px;
+    border-radius: 50%;
+    background: var(--teal);
+    opacity: 0.12;
+  }
+  .app-wordmark {
+    font-family: var(--serif);
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--crimson-mid);
+    margin-bottom: 6px;
+    position: relative;
+  }
+  .app-title {
+    font-family: var(--serif);
+    font-size: 22px;
+    font-weight: 700;
+    color: oklch(96% 0.010 75);
+    line-height: 1.25;
+    position: relative;
+    margin-bottom: 4px;
+  }
+  .app-subtitle {
+    font-size: 13px;
+    color: oklch(65% 0.008 50);
+    font-family: var(--sans);
+    position: relative;
+    margin-bottom: 16px;
+  }
+  .search-bar {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: oklch(30% 0.010 50);
+    border-radius: 12px;
+    padding: 10px 14px;
+    position: relative;
+  }
+  .search-bar input {
+    flex: 1;
+    background: none;
+    border: none;
+    outline: none;
+    font-size: 15px;
+    color: oklch(90% 0.008 75);
+    font-family: var(--sans);
+  }
+  .search-bar input::placeholder { color: oklch(55% 0.008 50); }
+  .search-icon { color: oklch(55% 0.008 50); font-size: 16px; flex-shrink: 0; }
+
+  /* Quick access cards */
+  .section-header {
+    padding: 18px 20px 10px;
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--ink);
+    font-family: var(--sans);
+    letter-spacing: -0.3px;
+  }
+  .card-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    padding: 0 16px 4px;
+  }
+  .quick-card {
+    background: white;
+    border-radius: 16px;
+    padding: 16px;
+    cursor: pointer;
+    border: 1px solid var(--cream-border);
+    box-shadow: 0 1px 4px oklch(0% 0 0 / 0.04);
+    transition: transform 0.1s, box-shadow 0.1s;
+    active: transform 0.05s;
+  }
+  .quick-card:active { transform: scale(0.97); }
+  .qc-icon {
+    width: 40px; height: 40px;
+    border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 20px;
+    margin-bottom: 10px;
+  }
+  .qc-title {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--ink);
+    line-height: 1.3;
+    font-family: var(--sans);
+  }
+  .qc-sub {
+    font-size: 11.5px;
+    color: var(--ink-light);
+    margin-top: 3px;
+    line-height: 1.4;
+    font-family: var(--sans);
+  }
+
+  /* List rows (iOS style) */
+  .list-section {
+    background: white;
+    border-radius: 12px;
+    margin: 8px 16px;
+    overflow: hidden;
+    border: 1px solid var(--cream-border);
+  }
+  .list-row {
+    display: flex;
+    align-items: center;
+    padding: 13px 16px;
+    gap: 12px;
+    cursor: pointer;
+    border-bottom: 0.5px solid var(--cream-border);
+    background: white;
+    transition: background 0.1s;
+  }
+  .list-row:last-child { border-bottom: none; }
+  .list-row:active { background: var(--cream-dark); }
+  .list-row-icon {
+    width: 32px; height: 32px;
+    border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 16px;
+    flex-shrink: 0;
+  }
+  .list-row-content { flex: 1; min-width: 0; }
+  .list-row-title {
+    font-size: 15px;
+    font-weight: 500;
+    color: var(--ink);
+    font-family: var(--sans);
+  }
+  .list-row-sub {
+    font-size: 12.5px;
+    color: var(--ink-light);
+    margin-top: 1px;
+    font-family: var(--sans);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .list-row-chevron {
+    color: oklch(75% 0.008 50);
+    font-size: 14px;
+    flex-shrink: 0;
+  }
+
+  /* ── SELECTOR SCREEN ── */
+  .step-progress {
+    display: flex;
+    gap: 6px;
+    padding: 8px 20px 16px;
+  }
+  .step-pip {
+    flex: 1;
+    height: 4px;
+    border-radius: 2px;
+    background: var(--cream-border);
+    transition: background 0.2s;
+  }
+  .step-pip.done { background: var(--crimson); }
+  .step-pip.active { background: var(--crimson-mid); }
+
+  .selector-question {
+    padding: 0 20px 20px;
+  }
+  .sq-tag {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--crimson);
+    margin-bottom: 6px;
+    font-family: var(--sans);
+  }
+  .sq-question {
+    font-family: var(--serif);
+    font-size: 20px;
+    font-weight: 600;
+    color: var(--ink);
+    line-height: 1.35;
+  }
+  .selector-options {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 0 16px;
+  }
+  .sel-option {
+    background: white;
+    border: 1.5px solid var(--cream-border);
+    border-radius: 14px;
+    padding: 16px;
+    cursor: pointer;
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    transition: all 0.12s;
+    box-shadow: 0 1px 3px oklch(0% 0 0 / 0.04);
+  }
+  .sel-option:active { background: var(--crimson-light); border-color: var(--crimson); transform: scale(0.985); }
+  .sel-option-radio {
+    width: 22px; height: 22px;
+    border-radius: 50%;
+    border: 2px solid var(--cream-border);
+    flex-shrink: 0;
+    margin-top: 1px;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .sel-option-title {
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--ink);
+    font-family: var(--sans);
+    line-height: 1.3;
+  }
+  .sel-option-sub {
+    font-size: 12.5px;
+    color: var(--ink-light);
+    margin-top: 3px;
+    font-family: var(--sans);
+    line-height: 1.4;
+  }
+
+  /* Result screen */
+  .result-hero {
+    background: var(--ink);
+    margin: 0 16px 16px;
+    border-radius: 16px;
+    padding: 18px;
+    overflow: hidden;
+    position: relative;
+  }
+  .result-hero::before {
+    content: '';
+    position: absolute;
+    top: -20px; right: -20px;
+    width: 80px; height: 80px;
+    border-radius: 50%;
+    background: var(--crimson);
+    opacity: 0.2;
+  }
+  .result-hero-label {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--crimson-mid);
+    margin-bottom: 4px;
+    font-family: var(--sans);
+    position: relative;
+  }
+  .result-hero-title {
+    font-family: var(--serif);
+    font-size: 17px;
+    font-weight: 600;
+    color: oklch(95% 0.010 75);
+    line-height: 1.3;
+    position: relative;
+  }
+  .result-hero-ctx {
+    font-size: 12px;
+    color: oklch(60% 0.008 50);
+    margin-top: 4px;
+    font-style: italic;
+    font-family: var(--serif);
+    position: relative;
+  }
+  .regimen-card {
+    background: white;
+    border-radius: 14px;
+    margin: 0 16px 12px;
+    overflow: hidden;
+    border: 1px solid var(--cream-border);
+  }
+  .rc-header {
+    padding: 10px 14px 8px;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--ink-light);
+    border-bottom: 0.5px solid var(--cream-border);
+    font-family: var(--sans);
+    background: var(--cream-dark);
+  }
+  .rc-item {
+    padding: 12px 14px;
+    border-bottom: 0.5px solid var(--cream-border);
+    border-left: 3px solid var(--crimson);
+  }
+  .rc-item.alt { border-left-color: var(--teal); }
+  .rc-item:last-child { border-bottom: none; }
+  .rc-drug {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--ink);
+    font-family: var(--sans);
+  }
+  .rc-trade {
+    font-size: 12px;
+    color: var(--ink-light);
+    font-style: italic;
+    margin-left: 3px;
+    font-weight: 400;
+  }
+  .rc-note {
+    font-size: 12px;
+    color: var(--ink-mid);
+    margin-top: 2px;
+    font-style: italic;
+    font-family: var(--sans);
+  }
+  .duration-pill {
+    margin: 0 16px 12px;
+    background: var(--crimson-light);
+    border-radius: 12px;
+    padding: 14px 16px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    border: 1px solid oklch(84% 0.06 25);
+  }
+  .dur-num {
+    font-family: var(--serif);
+    font-size: 36px;
+    font-weight: 700;
+    color: var(--crimson);
+    line-height: 1;
+  }
+  .dur-text {
+    font-size: 13px;
+    color: var(--crimson);
+    font-family: var(--sans);
+    line-height: 1.4;
+  }
+  .dur-text strong { font-weight: 600; display: block; }
+  .coverage-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    padding: 0 16px 16px;
+  }
+  .cov-chip {
+    padding: 4px 10px;
+    border-radius: 100px;
+    font-size: 11.5px;
+    font-weight: 500;
+    font-family: var(--sans);
+  }
+  .chip-gn { background: oklch(90% 0.05 220); color: oklch(35% 0.10 220); }
+  .chip-gp { background: oklch(91% 0.05 140); color: oklch(35% 0.10 140); }
+  .chip-ana { background: oklch(91% 0.05 55); color: oklch(38% 0.10 55); }
+  .chip-fun { background: oklch(90% 0.05 290); color: oklch(35% 0.10 290); }
+  .restart-row {
+    padding: 4px 16px 16px;
+  }
+  .restart-btn-ios {
+    width: 100%;
+    background: var(--ink);
+    color: oklch(95% 0.010 75);
+    border: none;
+    border-radius: 12px;
+    padding: 14px;
+    font-size: 15px;
+    font-weight: 600;
+    font-family: var(--sans);
+    cursor: pointer;
+    letter-spacing: -0.1px;
+  }
+
+  /* ── COVERAGE SCREEN ── */
+  .coverage-scroll-x {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    padding: 0 16px 16px;
+  }
+  .coverage-scroll-x::-webkit-scrollbar { display: none; }
+  .cov-table {
+    border-collapse: collapse;
+    font-size: 12px;
+    font-family: var(--sans);
+    min-width: 560px;
+  }
+  .cov-table thead tr th {
+    background: var(--ink);
+    color: oklch(85% 0.008 75);
+    padding: 8px 10px;
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    white-space: nowrap;
+    text-align: center;
+    border-right: 1px solid oklch(35% 0.01 50);
+  }
+  .cov-table thead tr th:first-child { text-align: left; min-width: 130px; }
+  .cov-table tbody tr { border-bottom: 0.5px solid var(--cream-border); }
+  .cov-table tbody tr.group-row td {
+    background: var(--cream-dark);
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--ink-light);
+    padding: 6px 10px;
+    text-align: left;
+  }
+  .cov-table tbody td {
+    padding: 8px 10px;
+    text-align: center;
+    vertical-align: middle;
+    background: white;
+  }
+  .cov-table tbody td:first-child { text-align: left; font-weight: 500; font-size: 12.5px; color: var(--ink); }
+  .cov-dot {
+    width: 18px; height: 18px;
+    border-radius: 50%;
+    display: inline-flex; align-items: center; justify-content: center;
+    font-size: 10px; font-weight: 700;
+  }
+  .d4 { background: oklch(52% 0.14 155); color: white; }
+  .d3 { background: oklch(70% 0.14 88); color: white; }
+  .d2 { background: oklch(76% 0.08 50); color: white; }
+  .d1 { background: oklch(88% 0.01 50); color: var(--ink-light); }
+  .filter-scroll {
+    display: flex;
+    gap: 8px;
+    padding: 4px 16px 12px;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+  }
+  .filter-scroll::-webkit-scrollbar { display: none; }
+  .filter-pill {
+    padding: 6px 14px;
+    border-radius: 100px;
+    font-size: 13px;
+    font-weight: 500;
+    white-space: nowrap;
+    background: white;
+    border: 1.5px solid var(--cream-border);
+    color: var(--ink-mid);
+    cursor: pointer;
+    font-family: var(--sans);
+    flex-shrink: 0;
+  }
+  .filter-pill.active {
+    background: var(--ink);
+    border-color: var(--ink);
+    color: oklch(95% 0.010 75);
+  }
+
+  /* ── MORE SCREEN ── */
+  .more-header {
+    padding: 8px 20px 16px;
+    font-family: var(--serif);
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--ink);
+  }
+  .list-section-label {
+    padding: 6px 20px 4px;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--ink-light);
+    font-family: var(--sans);
+  }
+
+  /* ── SOURCE DETAIL ── */
+  .source-detail-hero {
+    background: var(--ink);
+    padding: 16px 20px 20px;
+  }
+  .sdh-label {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--crimson-mid);
+    margin-bottom: 4px;
+    font-family: var(--sans);
+  }
+  .sdh-title {
+    font-family: var(--serif);
+    font-size: 20px;
+    font-weight: 700;
+    color: oklch(95% 0.010 75);
+    line-height: 1.25;
+  }
+  .sdh-sub {
+    font-size: 13px;
+    color: oklch(60% 0.008 50);
+    margin-top: 4px;
+    font-style: italic;
+    font-family: var(--serif);
+  }
+  .detail-section-title {
+    padding: 14px 20px 8px;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--ink-light);
+    font-family: var(--sans);
+    border-bottom: 0.5px solid var(--cream-border);
+    margin: 0 16px;
+  }
+  .org-card {
+    background: white;
+    border-radius: 12px;
+    margin: 8px 16px;
+    overflow: hidden;
+    border: 1px solid var(--cream-border);
+  }
+  .org-row {
+    display: flex;
+    align-items: flex-start;
+    padding: 11px 14px;
+    gap: 10px;
+    border-bottom: 0.5px solid var(--cream-border);
+  }
+  .org-row:last-child { border-bottom: none; }
+  .org-dot {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    background: var(--crimson);
+    flex-shrink: 0;
+    margin-top: 5px;
+  }
+  .org-name {
+    font-size: 13.5px;
+    font-style: italic;
+    color: var(--ink);
+    font-family: var(--sans);
+    line-height: 1.3;
+  }
+  .org-note {
+    font-size: 12px;
+    color: var(--ink-light);
+    font-style: normal;
+    margin-top: 1px;
+  }
+  .dur-card {
+    background: var(--gold-light);
+    border-radius: 12px;
+    margin: 8px 16px 20px;
+    padding: 14px;
+    border: 1px solid oklch(85% 0.07 75);
+  }
+  .dur-card-label {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 4px;
+    font-family: var(--sans);
+  }
+  .dur-card-text {
+    font-size: 13px;
+    color: var(--ink);
+    line-height: 1.5;
+    font-family: var(--sans);
+  }
+
+  /* ── SEARCH ── */
+  .search-screen-bar {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px 16px 12px;
+  }
+  .search-screen-input-wrap {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: oklch(91% 0.012 70);
+    border-radius: 10px;
+    padding: 9px 12px;
+  }
+  .search-screen-input {
+    flex: 1;
+    background: none;
+    border: none;
+    outline: none;
+    font-size: 15px;
+    color: var(--ink);
+    font-family: var(--sans);
+  }
+  .search-screen-input::placeholder { color: oklch(60% 0.008 50); }
+  .search-cancel {
+    background: none;
+    border: none;
+    color: var(--crimson);
+    font-size: 15px;
+    cursor: pointer;
+    font-family: var(--sans);
+    font-weight: 500;
+    padding: 4px 0;
+    white-space: nowrap;
+  }
+  .search-result-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 12px 16px;
+    border-bottom: 0.5px solid var(--cream-border);
+    cursor: pointer;
+    background: white;
+  }
+  .search-result-item:active { background: var(--cream-dark); }
+  .sri-tag {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 2px 7px;
+    border-radius: 4px;
+    background: var(--crimson-light);
+    color: var(--crimson);
+    flex-shrink: 0;
+    margin-top: 2px;
+    font-family: var(--sans);
+  }
+  .sri-tag.teal { background: var(--teal-light); color: var(--teal); }
+  .sri-tag.gold { background: var(--gold-light); color: var(--gold); }
+  .sri-title {
+    font-size: 14.5px;
+    font-weight: 500;
+    color: var(--ink);
+    font-family: var(--sans);
+    line-height: 1.3;
+  }
+  .sri-sub {
+    font-size: 12px;
+    color: var(--ink-light);
+    margin-top: 2px;
+    font-family: var(--sans);
+    line-height: 1.4;
+  }
+  em.highlight {
+    font-style: normal;
+    background: oklch(90% 0.08 75);
+    border-radius: 2px;
+    padding: 0 1px;
+  }
+
+  /* ── DURATION SCREEN ── */
+  .stopit-card {
+    background: white;
+    border-radius: 14px;
+    margin: 8px 16px;
+    padding: 16px;
+    border: 1px solid var(--cream-border);
+  }
+  .stopit-title {
+    font-family: var(--serif);
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--ink);
+    margin-bottom: 10px;
+  }
+  .stopit-stats {
+    display: flex;
+    gap: 16px;
+    margin-bottom: 12px;
+  }
+  .ss-block { text-align: center; flex: 1; }
+  .ss-num {
+    font-family: var(--serif);
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--crimson);
+    line-height: 1;
+  }
+  .ss-desc {
+    font-size: 11px;
+    color: var(--ink-mid);
+    margin-top: 3px;
+    line-height: 1.4;
+    font-family: var(--sans);
+  }
+  .stopit-quote {
+    border-left: 2px solid var(--cream-border);
+    padding-left: 12px;
+    font-style: italic;
+    font-family: var(--serif);
+    font-size: 13px;
+    color: var(--ink-mid);
+    line-height: 1.5;
+    margin-bottom: 10px;
+  }
+  .stopit-quote cite {
+    display: block;
+    font-size: 11px;
+    font-style: normal;
+    color: var(--ink-light);
+    margin-top: 4px;
+  }
+  .dur-table-card {
+    background: white;
+    border-radius: 14px;
+    margin: 8px 16px;
+    overflow: hidden;
+    border: 1px solid var(--cream-border);
+  }
+  .dur-table-row {
+    display: flex;
+    align-items: flex-start;
+    padding: 12px 14px;
+    gap: 10px;
+    border-bottom: 0.5px solid var(--cream-border);
+  }
+  .dur-table-row:last-child { border-bottom: none; }
+  .dur-table-row:nth-child(even) { background: var(--cream); }
+  .dtr-scenario {
+    flex: 1;
+    font-size: 13.5px;
+    color: var(--ink);
+    font-family: var(--sans);
+    line-height: 1.4;
+  }
+  .dtr-dur {
+    font-family: var(--serif);
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--crimson);
+    white-space: nowrap;
+    flex-shrink: 0;
+    text-align: right;
+    min-width: 60px;
+  }
+  .dtr-note {
+    font-size: 11px;
+    color: var(--ink-light);
+    font-family: var(--sans);
+    display: block;
+    margin-top: 1px;
+  }
+  .forest-card {
+    background: white;
+    border-radius: 14px;
+    margin: 8px 16px 20px;
+    overflow: hidden;
+    border: 1px solid var(--cream-border);
+  }
+  .forest-card img {
+    width: 100%;
+    display: block;
+  }
+  .forest-card-caption {
+    padding: 10px 14px;
+    font-size: 12px;
+    color: var(--ink-light);
+    font-style: italic;
+    font-family: var(--serif);
+    border-top: 0.5px solid var(--cream-border);
+  }
+
+  /* Transition */
+  .screen-slide-enter { animation: slideInRight 0.22s cubic-bezier(0.4,0,0.2,1) forwards; }
+  .screen-slide-exit  { animation: slideOutLeft 0.22s cubic-bezier(0.4,0,0.2,1) forwards; }
+  @keyframes slideInRight { from { transform: translateX(100%); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
+  @keyframes slideOutLeft  { from { transform: translateX(0); opacity: 1; } to { transform: translateX(-30%); opacity: 0; } }
+  .screen-slide-back-enter { animation: slideInLeft 0.22s cubic-bezier(0.4,0,0.2,1) forwards; }
+  @keyframes slideInLeft { from { transform: translateX(-30%); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
+
+  /* Outer layout */
+  .outer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+  }
+  .outer-label {
+    color: oklch(50% 0.01 50);
+    font-size: 12px;
+    font-family: var(--sans, system-ui);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+  @media (max-height: 900px) {
+    .phone-shell { transform: scale(0.88); transform-origin: center center; }
+  }
+  @media (max-height: 780px) {
+    .phone-shell { transform: scale(0.75); transform-origin: center center; }
+  }
+</style>
+</head>
+<body>
+<div id="root"></div>
+<script type="text/babel" src="tweaks-panel.jsx"></script>
+<script type="text/babel">
+
+const { useState, useRef, useEffect, createContext, useContext } = React;
+
+// ── App-level context ─────────────────────────────────────
+const AppContext = createContext({ showStatusBar: true, darkMode: false });
+
+
+
+// ── Shared Data (same as web app) ──────────────────────────
+
+const REGIMENS = {
+  community: {
+    lower: {
+      none: { title: "Lower-Risk, Community-Acquired", context: "No β-lactam allergy · Community-acquired · Lower severity",
+        preferred: [{ drug: "Ceftriaxone + Metronidazole", trade: "Rocephin + Flagyl", note: "Most evidence base; preferred first-line" }, { drug: "Ertapenem", trade: "Invanz", note: "Monotherapy; once-daily dosing" }],
+        alternatives: [{ drug: "Moxifloxacin", trade: "Avelox", note: "Monotherapy; oral step-down" }],
+        coverageTypes: ["gn", "ana", "gp"], duration: 4, durationNote: "≤4 days after adequate source control (STOP-IT / SIS 2017)" },
+      allergy: { title: "Lower-Risk — β-Lactam Allergy", context: "β-Lactam allergy · Community-acquired · Lower severity",
+        preferred: [{ drug: "Ciprofloxacin + Metronidazole", trade: "Cipro + Flagyl", note: "Standard β-lactam allergy alternative" }, { drug: "Moxifloxacin", trade: "Avelox", note: "Monotherapy option" }],
+        alternatives: [],
+        coverageTypes: ["gn", "ana", "gp"], duration: 4, durationNote: "≤4 days after adequate source control" }
+    },
+    higher: {
+      none: { title: "Higher-Risk, Community-Acquired", context: "No β-lactam allergy · Community-acquired · Higher severity",
+        preferred: [{ drug: "Piperacillin–Tazobactam", trade: "Zosyn", note: "Highest abscess penetration; covers enterococci" }, { drug: "Cefepime + Metronidazole", trade: "Maxipime + Flagyl", note: "Lowest all-cause mortality in meta-analysis" }, { drug: "Imipenem–Cilastatin", trade: "Primaxin", note: "Monotherapy; reserve for resistant organisms" }, { drug: "Meropenem", trade: "Merrem", note: "Preferred if ESBL suspected" }],
+        alternatives: [{ drug: "Ceftazidime + Metronidazole", trade: "Fortaz + Flagyl", note: "+ Ampicillin if enterococcal coverage needed" }],
+        coverageTypes: ["gn", "ana", "gp"], duration: 4, durationNote: "≤4 days; up to 8 days if ICU (SIS 2024)" },
+      allergy: { title: "Higher-Risk — β-Lactam Allergy", context: "β-Lactam allergy · Community-acquired · Higher severity",
+        preferred: [{ drug: "Aztreonam + Metronidazole + Vancomycin", trade: "Azactam + Flagyl + Vancocin", note: "Complete GN/anaerobe/GP cover" }],
+        alternatives: [],
+        coverageTypes: ["gn", "ana", "gp"], duration: 4, durationNote: "≤4 days; up to 8 days if ICU" }
+    }
+  },
+  healthcare: {
+    lower: {
+      none: { title: "Healthcare-Associated", context: "No β-lactam allergy · Healthcare-associated · Standard risk",
+        preferred: [{ drug: "Piperacillin–Tazobactam ± Vancomycin", trade: "Zosyn ± Vancocin", note: "Add vancomycin if MRSA risk" }, { drug: "Meropenem + Ampicillin", trade: "Merrem + Principen", note: "For MDRO risk" }],
+        alternatives: [{ drug: "Ceftazidime–Avibactam + Metronidazole", trade: "Avycaz + Flagyl", note: "For confirmed ESBL/resistant organisms" }],
+        coverageTypes: ["gn", "ana", "gp", "fun"], duration: 4, durationNote: "≤4 days; consider Candida coverage if critically ill",
+        note: "Consider empiric echinocandin if ICU + prior broad-spectrum abx + upper GI perforation." },
+      allergy: { title: "Healthcare-Associated — β-Lactam Allergy", context: "β-Lactam allergy · Healthcare-associated",
+        preferred: [{ drug: "Aztreonam + Metronidazole + Vancomycin", trade: "Azactam + Flagyl + Vancocin", note: "Aztreonam minimal cross-reactivity" }],
+        alternatives: [{ drug: "Tigecycline + Colistin", trade: "Tygacil + Coly-Mycin", note: "Last resort — high mortality with tigecycline" }],
+        coverageTypes: ["gn", "ana", "gp"], duration: 4, durationNote: "≤4 days after source control" }
+    },
+    higher: {
+      none: { title: "Healthcare-Associated — Critically Ill", context: "No β-lactam allergy · ICU / MDRO suspected",
+        preferred: [{ drug: "Meropenem + Vancomycin", trade: "Merrem + Vancocin", note: "Broadest cover; de-escalate with cultures" }, { drug: "Imipenem–Cilastatin + Vancomycin", trade: "Primaxin + Vancocin", note: "Alternative to meropenem" }],
+        alternatives: [{ drug: "Ceftazidime–Avibactam + Metronidazole + Vancomycin", trade: "Avycaz + Flagyl + Vancocin", note: "Carbapenem-sparing if ESBL confirmed" }],
+        coverageTypes: ["gn", "gp", "fun"], duration: 8, durationNote: "≤8 days after source control (SIS 2024); reassess daily",
+        note: "Empiric antifungal (micafungin/caspofungin) recommended in critically ill with upper GI source." },
+      allergy: { title: "Healthcare-Associated, Critically Ill — β-Lactam Allergy", context: "β-Lactam allergy · ICU / MDRO suspected",
+        preferred: [{ drug: "Aztreonam + Metronidazole + Vancomycin + Echinocandin", trade: "Azactam + Flagyl + Vancocin + Micafungin", note: "Full empiric cover" }],
+        alternatives: [],
+        coverageTypes: ["gn", "ana", "gp", "fun"], duration: 8, durationNote: "≤8 days; ID consultation strongly recommended" }
+    }
+  }
+};
+
+const STEPS = [
+{ id: "acquisition", tag: "Step 1 of 3", question: "Where was this infection acquired?",
+  options: [{ value: "community", label: "Community-acquired", sub: "No healthcare contact in prior 90 days" }, { value: "healthcare", label: "Healthcare-associated", sub: "Hospitalized, recent surgery, prior antibiotics, or long-term care" }] },
+{ id: "risk", tag: "Step 2 of 3", question: "What is the patient's risk level?",
+  options: [{ value: "lower", label: "Lower risk", sub: "Stable, no ICU, APACHE II < 10" }, { value: "higher", label: "Higher risk / critically ill", sub: "ICU, APACHE II ≥ 10, immunosuppressed, MDRO concern" }] },
+{ id: "allergy", tag: "Step 3 of 3", question: "Significant β-lactam allergy?",
+  options: [{ value: "none", label: "No allergy", sub: "No documented penicillin / cephalosporin / carbapenem allergy" }, { value: "allergy", label: "β-Lactam allergy", sub: "Documented allergy — avoid penicillins, cephalosporins, carbapenems" }] }];
+
+
+const SOURCE_DETAILS = {
+  "Appendicitis": { subtitle: "Perforated appendicitis — leading community-acquired source",
+    organisms: [{ name: "Escherichia coli", note: "~46% of isolates; dominant pathogen" }, { name: "Streptococcus anginosus group", note: "Abscess-forming; common in young patients" }, { name: "Bacteroides fragilis group", note: "Predominant anaerobe with perforation" }, { name: "Peptostreptococcus spp.", note: "Gram-positive anaerobe" }, { name: "Klebsiella pneumoniae", note: "~10% of isolates" }],
+    preferred: [{ drug: "Ceftriaxone + Metronidazole", trade: "Rocephin + Flagyl", note: "First-line, community-acquired" }, { drug: "Ertapenem", trade: "Invanz", note: "Monotherapy alternative" }],
+    alternatives: [{ drug: "Piperacillin–Tazobactam", trade: "Zosyn", note: "If higher severity or ESBL concern" }, { drug: "Ciprofloxacin + Metronidazole", trade: "Cipro + Flagyl", note: "β-lactam allergy" }],
+    duration: "≤4 days after source control (appendectomy/drainage). ≤24 hrs if non-perforated." },
+  "Cholecystitis": { subtitle: "Complicated cholecystitis with biliary perforation or infection",
+    organisms: [{ name: "Escherichia coli", note: "Most common biliary pathogen" }, { name: "Klebsiella pneumoniae", note: "Common in biliary infections" }, { name: "Enterococcus faecalis", note: "Requires pip-tazo or IMP for coverage" }, { name: "Bacteroides fragilis group", note: "Gangrenous / perforated cholecystitis" }, { name: "Clostridium spp.", note: "Emphysematous cholecystitis" }],
+    preferred: [{ drug: "Piperacillin–Tazobactam", trade: "Zosyn", note: "Covers enterococci; higher risk" }, { drug: "Ceftriaxone + Metronidazole", trade: "Rocephin + Flagyl", note: "Lower-risk, community-acquired" }],
+    alternatives: [{ drug: "Ertapenem", trade: "Invanz", note: "Does NOT cover Enterococcus" }, { drug: "Imipenem–Cilastatin", trade: "Primaxin", note: "Covers Enterococcus; higher severity" }],
+    duration: "≤24 hrs if uncomplicated. ≤4 days if perforated/abscess with source control." },
+  "Diverticulitis": { subtitle: "Perforated diverticulitis — tends to harbor resistant organisms",
+    organisms: [{ name: "Escherichia coli", note: "Dominant; ESBL-producing strains increasing" }, { name: "Bacteroides fragilis group", note: "Predominant anaerobe; distal GI" }, { name: "Enterococcus spp.", note: "More common vs. proximal GI sources" }, { name: "Klebsiella pneumoniae", note: "Including ESBL-producing strains" }, { name: "Clostridium spp.", note: "Anaerobic; distal GI flora" }],
+    preferred: [{ drug: "Piperacillin–Tazobactam", trade: "Zosyn", note: "Higher-risk or elderly patients" }, { drug: "Ceftriaxone + Metronidazole", trade: "Rocephin + Flagyl", note: "Lower-risk, community-acquired" }],
+    alternatives: [{ drug: "Meropenem", trade: "Merrem", note: "If ESBL suspected" }, { drug: "Ceftazidime–Avibactam + Metronidazole", trade: "Avycaz + Flagyl", note: "Confirmed ESBL or carbapenem-sparing" }],
+    duration: "≤4 days after source control. Drain + antibiotics for contained abscesses ≥4 cm." },
+  "Postoperative": { subtitle: "Post-surgical IAI — Crohn's, hepatobiliary, colorectal surgery",
+    organisms: [{ name: "Enterococcus spp. (incl. VRE)", note: "Increased vs. community-acquired" }, { name: "Staphylococcus aureus (MRSA)", note: "After abdominal wall procedures" }, { name: "Pseudomonas aeruginosa", note: "Prior antibiotics, prolonged hospitalization" }, { name: "Candida spp.", note: "After broad-spectrum abx; upper GI leak" }, { name: "ESBL Enterobacteriaceae", note: "Prior antibiotic exposure" }],
+    preferred: [{ drug: "Piperacillin–Tazobactam ± Vancomycin", trade: "Zosyn ± Vancocin", note: "Add vancomycin for MRSA risk" }, { drug: "Meropenem + Vancomycin", trade: "Merrem + Vancocin", note: "If MDRO or critically ill" }],
+    alternatives: [{ drug: "Ceftazidime–Avibactam + Metronidazole", trade: "Avycaz + Flagyl", note: "Carbapenem-sparing for ESBL" }, { drug: "Echinocandin (add-on)", trade: "Micafungin / Caspofungin", note: "If Candida peritonitis risk" }],
+    duration: "≤4 days; up to ≤8 days if ICU (SIS 2024). ID consultation recommended." },
+  "Pyogenic Liver Abscess": { subtitle: "Most common visceral abscess; biliary or hematogenous",
+    organisms: [{ name: "Klebsiella pneumoniae", note: "Dominant in Asia-Pacific; risk of metastatic endophthalmitis" }, { name: "Escherichia coli", note: "Biliary source; common in Western populations" }, { name: "Streptococcus anginosus group", note: "Hematogenous / dental/GI seeding" }, { name: "Bacteroides fragilis group", note: "Biliary or portal venous source" }, { name: "Enterococcus spp.", note: "Biliary source" }],
+    preferred: [{ drug: "Ceftriaxone + Metronidazole", trade: "Rocephin + Flagyl", note: "Community-acquired; culture-guided preferred" }, { drug: "Piperacillin–Tazobactam", trade: "Zosyn", note: "Higher-risk / biliary source" }],
+    alternatives: [{ drug: "Meropenem", trade: "Merrem", note: "Severe sepsis or ESBL Klebsiella" }, { drug: "Ciprofloxacin + Metronidazole", trade: "Cipro + Flagyl", note: "β-lactam allergy; oral step-down" }],
+    duration: "4–6 weeks total (IV then oral). Drainage required for abscesses >3–5 cm." },
+  "Trauma": { subtitle: "Penetrating or blunt abdominal trauma with bowel injury",
+    organisms: [{ name: "Escherichia coli", note: "Colonic/small bowel contamination" }, { name: "Bacteroides fragilis group", note: "Colonic perforation" }, { name: "Enterococcus spp.", note: "Colonic source" }, { name: "Staphylococcus aureus", note: "Skin/wound contamination" }, { name: "Clostridium spp.", note: "Soil/environmental; open trauma" }],
+    preferred: [{ drug: "Ceftriaxone + Metronidazole", trade: "Rocephin + Flagyl", note: "Perioperative prophylaxis / early treatment" }, { drug: "Piperacillin–Tazobactam", trade: "Zosyn", note: "Established infection / delayed presentation" }],
+    alternatives: [{ drug: "Imipenem–Cilastatin", trade: "Primaxin", note: "Heavy fecal contamination" }, { drug: "Aztreonam + Metronidazole + Vancomycin", trade: "Azactam + Flagyl + Vancocin", note: "β-lactam allergy" }],
+    duration: "≤24 hrs if early source control. ≤4 days if established infection. Reassess 48–72 hrs." }
+};
+
+const COVERAGE_GROUPS = [
+{ group: "Gram-Negative", pathogens: [
+  { name: "E. coli", CTX: 4, ERT: 4, PIP: 4, FEP: 4, MER: 4, CIP: 3, AZT: 4, CAZ: 4, MTZ: 1 },
+  { name: "E. coli (ESBL)", CTX: 1, ERT: 4, PIP: 2, FEP: 2, MER: 4, CIP: 2, AZT: 1, CAZ: 4, MTZ: 1 },
+  { name: "K. pneumoniae", CTX: 4, ERT: 4, PIP: 4, FEP: 4, MER: 4, CIP: 3, AZT: 4, CAZ: 4, MTZ: 1 },
+  { name: "Pseudomonas", CTX: 1, ERT: 1, PIP: 4, FEP: 4, MER: 4, CIP: 4, AZT: 4, CAZ: 4, MTZ: 1 },
+  { name: "Enterobacter", CTX: 2, ERT: 4, PIP: 3, FEP: 4, MER: 4, CIP: 3, AZT: 2, CAZ: 4, MTZ: 1 }]
+},
+{ group: "Gram-Positive", pathogens: [
+  { name: "Strep anginosus", CTX: 4, ERT: 4, PIP: 4, FEP: 4, MER: 4, CIP: 3, AZT: 1, CAZ: 1, MTZ: 1 },
+  { name: "E. faecalis", CTX: 1, ERT: 1, PIP: 4, FEP: 1, MER: 1, CIP: 2, AZT: 1, CAZ: 1, MTZ: 1 },
+  { name: "MRSA", CTX: 1, ERT: 1, PIP: 1, FEP: 1, MER: 1, CIP: 1, AZT: 1, CAZ: 1, MTZ: 1 }]
+},
+{ group: "Anaerobes", pathogens: [
+  { name: "B. fragilis", CTX: 1, ERT: 4, PIP: 4, FEP: 1, MER: 4, CIP: 1, AZT: 1, CAZ: 1, MTZ: 4 },
+  { name: "Peptostreptococcus", CTX: 4, ERT: 4, PIP: 4, FEP: 4, MER: 4, CIP: 2, AZT: 1, CAZ: 1, MTZ: 4 },
+  { name: "Clostridium", CTX: 3, ERT: 4, PIP: 4, FEP: 3, MER: 4, CIP: 1, AZT: 1, CAZ: 1, MTZ: 4 }]
+},
+{ group: "Fungi", pathogens: [
+  { name: "Candida spp.", note: "Echinocandin required",
+    CTX: 1, ERT: 1, PIP: 1, FEP: 1, MER: 1, CIP: 1, AZT: 1, CAZ: 1, MTZ: 1 }]
+}];
+
+const COV_DRUGS = ["CTX", "ERT", "PIP", "FEP", "MER", "CIP", "AZT", "CAZ", "MTZ"];
+const COV_DRUG_LABELS = { CTX: "CTX", ERT: "ERT", PIP: "PIP", FEP: "FEP", MER: "MER", CIP: "CIP", AZT: "AZT", CAZ: "CAZ", MTZ: "MTZ" };
+
+const SEARCH_INDEX = [
+...Object.entries(REGIMENS).flatMap(([acq, risks]) =>
+Object.entries(risks).flatMap(([risk, allergies]) =>
+Object.entries(allergies).map(([allergy, data]) => ({
+  type: "regimen", tag: "Regimen",
+  title: data.title,
+  sub: data.preferred.map((r) => r.drug).join(", "),
+  screen: "selector", acq, risk, allergy
+}))
+)
+),
+...Object.entries(SOURCE_DETAILS).map(([name, d]) => ({
+  type: "source", tag: "Source",
+  title: name,
+  sub: d.subtitle,
+  screen: "source-detail", sourceName: name
+})),
+...COVERAGE_GROUPS.flatMap((g) => g.pathogens.map((p) => ({
+  type: "pathogen", tag: "Pathogen",
+  title: p.name,
+  sub: g.group,
+  screen: "coverage"
+}))),
+{ type: "duration", tag: "Duration", title: "STOP-IT Trial", sub: "4 days vs. ~8 days — equivalent outcomes", screen: "duration" },
+{ type: "duration", tag: "Duration", title: "Duration of Therapy", sub: "Guidelines by clinical scenario", screen: "duration" }];
+
+
+// ── Icon components ───────────────────────────────────────
+function IconHome({ active }) {
+  const c = active ? "var(--crimson)" : "oklch(62% 0.010 50)";
+  return <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+    <path d="M3 9.5L12 3l9 6.5V20a1 1 0 01-1 1H15v-5h-6v5H4a1 1 0 01-1-1V9.5z" fill={c} />
+  </svg>;
+}
+function IconSearch({ active }) {
+  const c = active ? "var(--crimson)" : "oklch(62% 0.010 50)";
+  return <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+    <circle cx="10.5" cy="10.5" r="6.5" stroke={c} strokeWidth="2" />
+    <path d="M15.5 15.5L20 20" stroke={c} strokeWidth="2" strokeLinecap="round" />
+  </svg>;
+}
+function IconRx({ active }) {
+  const c = active ? "var(--crimson)" : "oklch(62% 0.010 50)";
+  return <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+    <rect x="3" y="3" width="18" height="18" rx="3" stroke={c} strokeWidth="2" />
+    <path d="M8 8h4a2 2 0 010 4H8v4M12 12l3 4" stroke={c} strokeWidth="2" strokeLinecap="round" />
+  </svg>;
+}
+function IconGrid({ active }) {
+  const c = active ? "var(--crimson)" : "oklch(62% 0.010 50)";
+  return <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+    <rect x="3" y="3" width="8" height="8" rx="1.5" fill={c} />
+    <rect x="13" y="3" width="8" height="8" rx="1.5" fill={c} />
+    <rect x="3" y="13" width="8" height="8" rx="1.5" fill={c} />
+    <rect x="13" y="13" width="8" height="8" rx="1.5" fill={c} />
+  </svg>;
+}
+function IconMore({ active }) {
+  const c = active ? "var(--crimson)" : "oklch(62% 0.010 50)";
+  return <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+    <circle cx="5" cy="12" r="2" fill={c} />
+    <circle cx="12" cy="12" r="2" fill={c} />
+    <circle cx="19" cy="12" r="2" fill={c} />
+  </svg>;
+}
+
+// ── Activity dot ──────────────────────────────────────────
+function Dot({ v }) {
+  const cfg = { 4: { cls: "d4", l: "●" }, 3: { cls: "d3", l: "◐" }, 2: { cls: "d2", l: "○" }, 1: { cls: "d1", l: "–" } };
+  const c = cfg[v] || cfg[1];
+  return <span className={`cov-dot ${c.cls}`}>{c.l}</span>;
+}
+
+// ── Status bar ────────────────────────────────────────────
+function StatusBar() {
+  const { showStatusBar } = useContext(AppContext);
+  if (!showStatusBar) return null;
+  return (
+    <div className="status-bar">
+      <span className="status-time" style={{ fontFamily: "\"SF Pro\"", textAlign: "justify" }}>9:41</span>
+      <div style={{ width: 120, height: 34, position: 'absolute', top: 10, left: '50%', transform: 'translateX(-50%)', background: '#000', borderRadius: 20, zIndex: 10 }} />
+      <div className="status-icons">
+        <svg width="17" height="12" viewBox="0 0 19 12" fill="var(--ink)">
+          <rect x="0" y="7.5" width="3.2" height="4.5" rx="0.7" />
+          <rect x="4.8" y="5" width="3.2" height="7" rx="0.7" />
+          <rect x="9.6" y="2.5" width="3.2" height="9.5" rx="0.7" />
+          <rect x="14.4" y="0" width="3.2" height="12" rx="0.7" />
+        </svg>
+        <svg width="25" height="12" viewBox="0 0 27 13" fill="none">
+          <rect x="0.5" y="0.5" width="23" height="12" rx="3.5" stroke="var(--ink)" strokeOpacity="0.35" />
+          <rect x="2" y="2" width="18" height="9" rx="2" fill="var(--ink)" />
+          <path d="M25 4.5V8.5C25.8 8.2 26.5 7.2 26.5 6.5C26.5 5.8 25.8 4.8 25 4.5Z" fill="var(--ink)" fillOpacity="0.4" />
+        </svg>
+      </div>
+    </div>);
+
+}
+
+// ── Coverage chip ─────────────────────────────────────────
+function CovChip({ type }) {
+  const labels = { gn: "Gram-neg", gp: "Gram-pos", ana: "Anaerobes", fun: "Antifungals" };
+  return <span className={`cov-chip chip-${type}`}>{labels[type]}</span>;
+}
+
+// ── HOME SCREEN ───────────────────────────────────────────
+function HomeScreen({ navigate, onSearch }) {
+  const [q, setQ] = useState("");
+  function handleSearch(e) {
+    e.preventDefault();
+    if (q.trim()) onSearch(q.trim());
+  }
+  return (
+    <>
+      <StatusBar />
+      <div className="screen-scroll">
+        <div className="home-hero">
+          <div className="app-wordmark">REAL Therapies</div>
+          <div className="app-title">Abdominal Abscess<br />Management</div>
+          <div className="app-subtitle">SIS 2017/2024 · STOP-IT Evidence</div>
+          <form onSubmit={handleSearch}>
+            <div className="search-bar">
+              <span className="search-icon">🔍</span>
+              <input
+                placeholder="Search drugs, organisms, sources…"
+                value={q}
+                onChange={(e) => setQ(e.target.value)} />
+              
+            </div>
+          </form>
+        </div>
+
+        <div className="section-header">Quick Access</div>
+        <div className="card-grid">
+          {[
+          { icon: "💊", bg: "var(--crimson-light)", title: "Antibiotic Selector", sub: "3-step guided regimen", screen: "selector" },
+          { icon: "🦠", bg: "var(--teal-light)", title: "Pathogen Coverage", sub: "12-drug activity matrix", screen: "coverage" },
+          { icon: "📍", bg: "var(--gold-light)", title: "Common Sources", sub: "Click source for organisms & Rx", screen: "sources" },
+          { icon: "⏱", bg: "oklch(91% 0.04 240)", title: "Duration Guide", sub: "STOP-IT & SIS guidelines", screen: "duration" }].
+          map((c) =>
+          <div key={c.title} className="quick-card" onClick={() => navigate(c.screen)}>
+              <div className="qc-icon" style={{ background: c.bg }}>{c.icon}</div>
+              <div className="qc-title">{c.title}</div>
+              <div className="qc-sub">{c.sub}</div>
+            </div>
+          )}
+        </div>
+
+        <div className="section-header" style={{ paddingTop: 12 }}>Sources</div>
+        <div className="list-section">
+          {Object.entries(SOURCE_DETAILS).map(([name, d]) =>
+          <div key={name} className="list-row" onClick={() => navigate("source-detail", { sourceName: name })}>
+              <div className="list-row-icon" style={{ background: "var(--crimson-light)" }}>
+                {{ Appendicitis: "🫥", Cholecystitis: "🟡", Diverticulitis: "🫒", Postoperative: "🏥", "Pyogenic Liver Abscess": "🩸", Trauma: "⚡" }[name] || "🔬"}
+              </div>
+              <div className="list-row-content">
+                <div className="list-row-title">{name}</div>
+                <div className="list-row-sub">{d.subtitle}</div>
+              </div>
+              <span className="list-row-chevron">›</span>
+            </div>
+          )}
+        </div>
+        <div style={{ height: 8 }} />
+      </div>
+    </>);
+
+}
+
+// ── SELECTOR SCREEN ───────────────────────────────────────
+function SelectorScreen({ navigate, initialResult }) {
+  const [stepIdx, setStepIdx] = useState(initialResult ? 3 : 0);
+  const [answers, setAnswers] = useState(initialResult || {});
+
+  function pick(value) {
+    const step = STEPS[stepIdx];
+    const newAnswers = { ...answers, [step.id]: value };
+    setAnswers(newAnswers);
+    setStepIdx(stepIdx + 1);
+  }
+  function restart() {setStepIdx(0);setAnswers({});}
+  function goBack() {
+    if (stepIdx > 0) {
+      const prev = STEPS[stepIdx - 1];
+      const a = { ...answers };delete a[prev.id];
+      setAnswers(a);setStepIdx(stepIdx - 1);
+    } else {navigate("home");}
+  }
+
+  const done = stepIdx >= STEPS.length;
+  const data = done ? REGIMENS[answers.acquisition]?.[answers.risk]?.[answers.allergy] : null;
+
+  return (
+    <>
+      <StatusBar />
+      <div className="nav-bar">
+        <button className="nav-back" onClick={goBack}>‹ {stepIdx === 0 ? "Home" : "Back"}</button>
+        <div className="nav-title">{done ? "Recommendation" : "Antibiotic Selector"}</div>
+        <div className="nav-spacer" />
+      </div>
+      <div className="screen-scroll">
+        {!done &&
+        <>
+            <div className="step-progress">
+              {STEPS.map((s, i) => <div key={s.id} className={`step-pip ${i < stepIdx ? 'done' : i === stepIdx ? 'active' : ''}`} />)}
+            </div>
+            <div className="selector-question">
+              <div className="sq-tag">{STEPS[stepIdx].tag}</div>
+              <div className="sq-question">{STEPS[stepIdx].question}</div>
+            </div>
+            <div className="selector-options">
+              {STEPS[stepIdx].options.map((opt) =>
+            <div key={opt.value} className="sel-option" onClick={() => pick(opt.value)}>
+                  <div className="sel-option-radio" />
+                  <div>
+                    <div className="sel-option-title">{opt.label}</div>
+                    <div className="sel-option-sub">{opt.sub}</div>
+                  </div>
+                </div>
+            )}
+            </div>
+          </>
+        }
+        {done && data &&
+        <>
+            <div className="result-hero">
+              <div className="result-hero-label">Recommended Regimen</div>
+              <div className="result-hero-title">{data.title}</div>
+              <div className="result-hero-ctx">{data.context}</div>
+            </div>
+            {data.preferred.length > 0 &&
+          <div className="regimen-card">
+                <div className="rc-header">Preferred</div>
+                {data.preferred.map((r, i) =>
+            <div key={i} className="rc-item">
+                    <div className="rc-drug">{r.drug}<span className="rc-trade">({r.trade})</span></div>
+                    {r.note && <div className="rc-note">{r.note}</div>}
+                  </div>
+            )}
+              </div>
+          }
+            {data.alternatives.length > 0 &&
+          <div className="regimen-card">
+                <div className="rc-header">Alternatives</div>
+                {data.alternatives.map((r, i) =>
+            <div key={i} className="rc-item alt">
+                    <div className="rc-drug">{r.drug}<span className="rc-trade">({r.trade})</span></div>
+                    {r.note && <div className="rc-note">{r.note}</div>}
+                  </div>
+            )}
+              </div>
+          }
+            {data.note &&
+          <div className="regimen-card">
+                <div className="rc-header">Special Considerations</div>
+                <div className="rc-item" style={{ borderLeftColor: 'var(--gold)' }}>
+                  <div className="rc-note" style={{ fontStyle: 'normal', fontSize: 13 }}>{data.note}</div>
+                </div>
+              </div>
+          }
+            <div className="duration-pill">
+              <div className="dur-num">{data.duration}</div>
+              <div className="dur-text"><strong>days of antibiotic therapy</strong>{data.durationNote}</div>
+            </div>
+            <div className="coverage-row">
+              {data.coverageTypes.map((t) => <CovChip key={t} type={t} />)}
+            </div>
+            <div className="restart-row">
+              <button className="restart-btn-ios" onClick={restart}>Start New Query</button>
+            </div>
+          </>
+        }
+        <div style={{ height: 8 }} />
+      </div>
+    </>);
+
+}
+
+// ── COVERAGE SCREEN ───────────────────────────────────────
+function CoverageScreen({ navigate }) {
+  const [filter, setFilter] = useState("all");
+  const filters = [
+  { id: "all", label: "All" }, { id: "Gram-Negative", label: "Gram-neg" }, { id: "Gram-Positive", label: "Gram-pos" },
+  { id: "Anaerobes", label: "Anaerobes" }, { id: "Fungi", label: "Fungi" }];
+
+  const visible = COVERAGE_GROUPS.filter((g) => filter === "all" || g.group === filter);
+  return (
+    <>
+      <StatusBar />
+      <div className="nav-bar">
+        <button className="nav-back" onClick={() => navigate("home")}>‹ Home</button>
+        <div className="nav-title">Pathogen Coverage</div>
+        <div className="nav-spacer" />
+      </div>
+      <div className="screen-scroll">
+        <div className="filter-scroll">
+          {filters.map((f) =>
+          <button key={f.id} className={`filter-pill ${filter === f.id ? 'active' : ''}`} onClick={() => setFilter(f.id)}>{f.label}</button>
+          )}
+        </div>
+        <div className="coverage-scroll-x">
+          <table className="cov-table">
+            <thead>
+              <tr>
+                <th>Organism</th>
+                {COV_DRUGS.map((d) => <th key={d}>{d}</th>)}
+              </tr>
+            </thead>
+            <tbody>
+              {visible.map((g) =>
+              <React.Fragment key={g.group}>
+                  <tr className="group-row"><td colSpan={COV_DRUGS.length + 1}>{g.group}</td></tr>
+                  {g.pathogens.map((p) =>
+                <tr key={p.name}>
+                      <td>{p.name}{p.note && <span style={{ display: 'block', fontSize: 10, color: 'var(--crimson)', fontWeight: 500 }}>{p.note}</span>}</td>
+                      {COV_DRUGS.map((d) => <td key={d}><Dot v={p[d]} /></td>)}
+                    </tr>
+                )}
+                </React.Fragment>
+              )}
+            </tbody>
+          </table>
+        </div>
+        <div style={{ padding: '0 16px 16px' }}>
+          <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap' }}>
+            {[{ cls: 'd4', l: '●', t: 'Active' }, { cls: 'd3', l: '◐', t: 'Variable' }, { cls: 'd2', l: '○', t: 'Weak' }, { cls: 'd1', l: '–', t: 'None' }].map((x) =>
+            <div key={x.t} style={{ display: 'flex', alignItems: 'center', gap: 5, fontSize: 12, color: 'var(--ink-mid)', fontFamily: 'var(--sans)' }}>
+                <span className={`cov-dot ${x.cls}`}>{x.l}</span>{x.t}
+              </div>
+            )}
+          </div>
+        </div>
+      </div>
+    </>);
+
+}
+
+// ── SOURCES LIST SCREEN ───────────────────────────────────
+function SourcesScreen({ navigate }) {
+  return (
+    <>
+      <StatusBar />
+      <div className="nav-bar">
+        <button className="nav-back" onClick={() => navigate("home")}>‹ Home</button>
+        <div className="nav-title">Common Sources</div>
+        <div className="nav-spacer" />
+      </div>
+      <div className="screen-scroll">
+        <div style={{ padding: '8px 20px 4px', fontSize: 14, color: 'var(--ink-light)', fontStyle: 'italic', fontFamily: 'var(--serif)' }}>
+          Tap a source to see typical organisms and recommended treatment.
+        </div>
+        <div className="list-section" style={{ marginTop: 12 }}>
+          {Object.entries(SOURCE_DETAILS).map(([name, d]) =>
+          <div key={name} className="list-row" onClick={() => navigate("source-detail", { sourceName: name })}>
+              <div className="list-row-icon" style={{ background: "var(--crimson-light)" }}>
+                {{ Appendicitis: "🫥", Cholecystitis: "🟡", Diverticulitis: "🫒", Postoperative: "🏥", "Pyogenic Liver Abscess": "🩸", Trauma: "⚡" }[name] || "🔬"}
+              </div>
+              <div className="list-row-content">
+                <div className="list-row-title">{name}</div>
+                <div className="list-row-sub">{d.subtitle}</div>
+              </div>
+              <span className="list-row-chevron">›</span>
+            </div>
+          )}
+        </div>
+        <div style={{ height: 12 }} />
+      </div>
+    </>);
+
+}
+
+// ── SOURCE DETAIL SCREEN ──────────────────────────────────
+function SourceDetailScreen({ navigate, sourceName, from }) {
+  const d = SOURCE_DETAILS[sourceName];
+  if (!d) return null;
+  return (
+    <>
+      <StatusBar />
+      <div className="nav-bar">
+        <button className="nav-back" onClick={() => navigate(from || "sources")}>‹ {from === "home" ? "Home" : "Sources"}</button>
+        <div className="nav-title">{sourceName}</div>
+        <div className="nav-spacer" />
+      </div>
+      <div className="screen-scroll">
+        <div className="source-detail-hero">
+          <div className="sdh-label">Common Source</div>
+          <div className="sdh-title">{sourceName}</div>
+          <div className="sdh-sub">{d.subtitle}</div>
+        </div>
+        <div style={{ padding: '14px 16px 6px' }}>
+          <div style={{ fontSize: 11, fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase', color: 'var(--ink-light)', fontFamily: 'var(--sans)' }}>Typical Organisms</div>
+        </div>
+        <div className="org-card">
+          {d.organisms.map((o, i) =>
+          <div key={i} className="org-row">
+              <div className="org-dot" />
+              <div>
+                <div className="org-name">{o.name}</div>
+                {o.note && <div className="org-note">{o.note}</div>}
+              </div>
+            </div>
+          )}
+        </div>
+        <div style={{ padding: '14px 16px 6px' }}>
+          <div style={{ fontSize: 11, fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase', color: 'var(--ink-light)', fontFamily: 'var(--sans)' }}>Preferred Treatment</div>
+        </div>
+        <div className="regimen-card">
+          {d.preferred.map((r, i) =>
+          <div key={i} className="rc-item">
+              <div className="rc-drug">{r.drug}<span className="rc-trade">({r.trade})</span></div>
+              {r.note && <div className="rc-note">{r.note}</div>}
+            </div>
+          )}
+        </div>
+        <div style={{ padding: '14px 16px 6px' }}>
+          <div style={{ fontSize: 11, fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase', color: 'var(--ink-light)', fontFamily: 'var(--sans)' }}>Alternatives</div>
+        </div>
+        <div className="regimen-card">
+          {d.alternatives.map((r, i) =>
+          <div key={i} className="rc-item alt">
+              <div className="rc-drug">{r.drug}<span className="rc-trade">({r.trade})</span></div>
+              {r.note && <div className="rc-note">{r.note}</div>}
+            </div>
+          )}
+        </div>
+        <div className="dur-card">
+          <div className="dur-card-label">Duration</div>
+          <div className="dur-card-text">{d.duration}</div>
+        </div>
+      </div>
+    </>);
+
+}
+
+// ── DURATION SCREEN ───────────────────────────────────────
+function DurationScreen({ navigate }) {
+  return (
+    <>
+      <StatusBar />
+      <div className="nav-bar">
+        <button className="nav-back" onClick={() => navigate("home")}>‹ Home</button>
+        <div className="nav-title">Duration of Therapy</div>
+        <div className="nav-spacer" />
+      </div>
+      <div className="screen-scroll">
+        <div className="stopit-card">
+          <div className="stopit-title">STOP-IT Trial — NEJM 2015</div>
+          <div className="stopit-stats">
+            <div className="ss-block"><div className="ss-num">4</div><div className="ss-desc">days (experimental arm)</div></div>
+            <div className="ss-block"><div className="ss-num">~8</div><div className="ss-desc">days (control arm)</div></div>
+            <div className="ss-block"><div className="ss-num">=</div><div className="ss-desc">equivalent outcomes</div></div>
+          </div>
+          <div className="stopit-quote">
+            "A fixed duration of 4 days resulted in outcomes similar to a traditional longer course…"
+            <cite>— Sawyer RG et al., NEJM 2015</cite>
+          </div>
+        </div>
+        <div className="forest-card">
+          <img src="assets/stopIT_subgroups.jpg" alt="STOP-IT subgroup forest plot" />
+          <div className="forest-card-caption">Figure 3: Primary Composite Outcome in Key Subgroups. Consistent results across severity, acquisition setting, and source control method.</div>
+        </div>
+        <div style={{ padding: '4px 16px 6px' }}>
+          <div style={{ fontSize: 11, fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase', color: 'var(--ink-light)', fontFamily: 'var(--sans)' }}>Duration by Scenario</div>
+        </div>
+        <div className="dur-table-card">
+          {[
+          { scenario: "Adequate source control achieved", dur: "≤4 days", note: "SIS 2017" },
+          { scenario: "Source control not possible", dur: "5–7 days", note: "SIS 2017; reassess for intervention" },
+          { scenario: "Critically ill (ICU)", dur: "≤8 days", note: "SIS 2024 update" },
+          { scenario: "Secondary bacteremia from IAI", dur: "≤7 days", note: "If source controlled" },
+          { scenario: "Uncomplicated (non-perforated appendicitis/cholecystitis)", dur: "≤24 hrs", note: "Postoperatively; SIS 2017" }].
+          map((r, i) =>
+          <div key={i} className="dur-table-row">
+              <div className="dtr-scenario">{r.scenario}<span className="dtr-note">{r.note}</span></div>
+              <div className="dtr-dur">{r.dur}</div>
+            </div>
+          )}
+        </div>
+        <div style={{ height: 16 }} />
+      </div>
+    </>);
+
+}
+
+// ── SEARCH SCREEN ─────────────────────────────────────────
+function SearchScreen({ navigate, initialQuery }) {
+  const [q, setQ] = useState(initialQuery || "");
+  const inputRef = useRef(null);
+  useEffect(() => {if (inputRef.current) inputRef.current.focus();}, []);
+
+  const results = q.trim().length < 1 ? [] : SEARCH_INDEX.filter((item) =>
+  (item.title + " " + item.sub).toLowerCase().includes(q.toLowerCase())
+  ).slice(0, 20);
+
+  function highlight(text) {
+    if (!q.trim()) return text;
+    const idx = text.toLowerCase().indexOf(q.toLowerCase());
+    if (idx === -1) return text;
+    return <>{text.slice(0, idx)}<em className="highlight">{text.slice(idx, idx + q.length)}</em>{text.slice(idx + q.length)}</>;
+  }
+
+  function handleResult(item) {
+    if (item.screen === "source-detail") navigate("source-detail", { sourceName: item.sourceName, from: "search" });else
+    if (item.screen === "selector" && item.acq) navigate("selector", { acq: item.acq, risk: item.risk, allergy: item.allergy });else
+    navigate(item.screen);
+  }
+
+  const tagColor = { Regimen: "", Pathogen: "teal", Source: "", Duration: "gold" };
+
+  return (
+    <>
+      <StatusBar />
+      <div className="search-screen-bar">
+        <div className="search-screen-input-wrap">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+            <circle cx="10.5" cy="10.5" r="6.5" stroke="oklch(60% 0.008 50)" strokeWidth="2" />
+            <path d="M15.5 15.5L20 20" stroke="oklch(60% 0.008 50)" strokeWidth="2" strokeLinecap="round" />
+          </svg>
+          <input
+            ref={inputRef}
+            className="search-screen-input"
+            placeholder="Search drugs, organisms, sources…"
+            value={q}
+            onChange={(e) => setQ(e.target.value)} />
+          
+          {q && <span style={{ fontSize: 16, color: 'var(--ink-light)', cursor: 'pointer' }} onClick={() => setQ("")}>×</span>}
+        </div>
+        <button className="search-cancel" onClick={() => navigate("home")}>Cancel</button>
+      </div>
+      <div className="screen-scroll">
+        {q.trim().length === 0 &&
+        <div style={{ padding: '32px 20px', textAlign: 'center', color: 'var(--ink-light)', fontFamily: 'var(--serif)', fontStyle: 'italic', fontSize: 15 }}>
+            Search across all antibiotics,<br />organisms, sources, and guidelines.
+          </div>
+        }
+        {q.trim().length > 0 && results.length === 0 &&
+        <div style={{ padding: '32px 20px', textAlign: 'center', color: 'var(--ink-light)', fontFamily: 'var(--serif)', fontStyle: 'italic', fontSize: 15 }}>
+            No results for "{q}"
+          </div>
+        }
+        {results.length > 0 &&
+        <div style={{ background: 'white', borderRadius: 12, margin: '0 16px', overflow: 'hidden', border: '1px solid var(--cream-border)' }}>
+            {results.map((item, i) =>
+          <div key={i} className="search-result-item" onClick={() => handleResult(item)}>
+                <span className={`sri-tag ${tagColor[item.tag] || ''}`}>{item.tag}</span>
+                <div>
+                  <div className="sri-title">{highlight(item.title)}</div>
+                  <div className="sri-sub">{item.sub}</div>
+                </div>
+              </div>
+          )}
+          </div>
+        }
+        <div style={{ height: 16 }} />
+      </div>
+    </>);
+
+}
+
+// ── MORE SCREEN ───────────────────────────────────────────
+function MoreScreen({ navigate }) {
+  return (
+    <>
+      <StatusBar />
+      <div className="more-header">More</div>
+      <div className="screen-scroll">
+        <div className="list-section-label">Clinical Tools</div>
+        <div className="list-section">
+          {[
+          { icon: "🦠", bg: "var(--teal-light)", title: "Pathogen Coverage Matrix", sub: "Activity of 9 antibiotics vs. 11 organisms", screen: "coverage" },
+          { icon: "⏱", bg: "oklch(91% 0.04 240)", title: "Duration of Therapy", sub: "STOP-IT trial & SIS guidelines", screen: "duration" },
+          { icon: "📍", bg: "var(--gold-light)", title: "Common Sources", sub: "Organisms & treatment by source", screen: "sources" }].
+          map((item) =>
+          <div key={item.title} className="list-row" onClick={() => navigate(item.screen)}>
+              <div className="list-row-icon" style={{ background: item.bg }}>{item.icon}</div>
+              <div className="list-row-content">
+                <div className="list-row-title">{item.title}</div>
+                <div className="list-row-sub">{item.sub}</div>
+              </div>
+              <span className="list-row-chevron">›</span>
+            </div>
+          )}
+        </div>
+        <div className="list-section-label" style={{ marginTop: 8 }}>Reference</div>
+        <div className="list-section">
+          {[
+          { icon: "📖", bg: "var(--crimson-light)", title: "SIS 2017 Guidelines", sub: "Mazuski JE et al. Surg Infect. 2017;18(1):1-76." },
+          { icon: "📖", bg: "var(--crimson-light)", title: "SIS 2024 Update", sub: "Huston JM et al. Surg Infect. 2024;25(6):419-435." },
+          { icon: "📖", bg: "var(--crimson-light)", title: "STOP-IT Trial", sub: "Sawyer RG et al. NEJM. 2015;372(21):1996-2005." },
+          { icon: "📖", bg: "var(--crimson-light)", title: "PK/PD Abscess Study", sub: "Cancela Costa A et al. AAC. 2025;69(1):e0117824." }].
+          map((item) =>
+          <div key={item.title} className="list-row">
+              <div className="list-row-icon" style={{ background: item.bg }}>{item.icon}</div>
+              <div className="list-row-content">
+                <div className="list-row-title">{item.title}</div>
+                <div className="list-row-sub">{item.sub}</div>
+              </div>
+            </div>
+          )}
+        </div>
+        <div style={{ padding: '16px 20px', fontSize: 12, color: 'var(--ink-light)', fontStyle: 'italic', fontFamily: 'var(--serif)', textAlign: 'center', lineHeight: 1.6 }}>
+          REAL Therapies — Reversible Electroporation + Antibiotic Lavage<br />
+          For clinical reference only. Always verify with local antibiogram.
+        </div>
+        <div style={{ height: 8 }} />
+      </div>
+    </>);
+
+}
+
+// ── ROOT APP ──────────────────────────────────────────────
+const TWEAK_DEFAULTS = /*EDITMODE-BEGIN*/{
+  "showStatusBar": false,
+  "showBezel": false,
+  "darkMode": false
+}/*EDITMODE-END*/;
+
+function App() {
+  const [tweaks, setTweak] = useTweaks(TWEAK_DEFAULTS);
+  const [screen, setScreen] = useState("home");
+  const [screenProps, setScreenProps] = useState({});
+  const [tab, setTab] = useState("home");
+  const [prevScreen, setPrevScreen] = useState(null);
+
+  function navigate(to, props = {}) {
+    setPrevScreen(screen);
+    setScreenProps(props);
+    setScreen(to);
+    // sync tab
+    const tabMap = { home: "home", selector: "selector", coverage: "coverage", sources: "more", "source-detail": "more", duration: "more", search: "home" };
+    if (tabMap[to]) setTab(tabMap[to]);
+  }
+
+  function goTab(t) {
+    const screenMap = { home: "home", selector: "selector", coverage: "coverage", more: "more" };
+    setTab(t);
+    navigate(screenMap[t] || t);
+  }
+
+  const tabs = [
+  { id: "home", label: "Home", Icon: IconHome },
+  { id: "selector", label: "Selector", Icon: IconRx },
+  { id: "coverage", label: "Coverage", Icon: IconGrid },
+  { id: "more", label: "More", Icon: IconMore }];
+
+
+  function handleSearch(q) {navigate("search", { initialQuery: q });}
+
+  function renderScreen() {
+    switch (screen) {
+      case "home":return <HomeScreen navigate={navigate} onSearch={handleSearch} />;
+      case "selector":return <SelectorScreen navigate={navigate} initialResult={screenProps.acq ? { acquisition: screenProps.acq, risk: screenProps.risk, allergy: screenProps.allergy } : null} />;
+      case "coverage":return <CoverageScreen navigate={navigate} />;
+      case "sources":return <SourcesScreen navigate={navigate} />;
+      case "source-detail":return <SourceDetailScreen navigate={navigate} sourceName={screenProps.sourceName} from={screenProps.from} />;
+      case "duration":return <DurationScreen navigate={navigate} />;
+      case "search":return <SearchScreen navigate={navigate} initialQuery={screenProps.initialQuery} />;
+      case "more":return <MoreScreen navigate={navigate} />;
+      default:return <HomeScreen navigate={navigate} onSearch={handleSearch} />;
+    }
+  }
+
+  const showTabBar = !["search"].includes(screen);
+
+  // Apply dark mode tweak to screen vars
+  const screenStyle = tweaks.darkMode ? {
+    '--cream': 'oklch(14% 0.010 50)',
+    '--cream-dark': 'oklch(18% 0.012 50)',
+    '--cream-border': 'oklch(28% 0.010 50)',
+    '--ink': 'oklch(92% 0.008 75)',
+    '--ink-mid': 'oklch(72% 0.008 60)',
+    '--ink-light': 'oklch(55% 0.008 50)',
+    background: 'oklch(14% 0.010 50)',
+  } : {};
+
+  return (
+    <AppContext.Provider value={{ showStatusBar: tweaks.showStatusBar, darkMode: tweaks.darkMode }}>
+    <div className="outer">
+      <div className="phone-shell" style={tweaks.showBezel ? {} : {borderRadius:0, boxShadow:'none'}}>
+        <div className="phone-screen" style={{...screenStyle, ...(tweaks.showBezel ? {} : {borderRadius:0})}}>
+          {/* Dynamic island — hidden via tweak */}
+          {tweaks.showStatusBar && <div className="dynamic-island" />}          <div style={{ flex: 1, display: 'flex', flexDirection: 'column', overflow: 'hidden' }} key={screen}>
+            {renderScreen()}
+          </div>
+          {showTabBar &&
+          <div className="tab-bar" style={tweaks.darkMode ? {background:'oklch(18% 0.012 50 / 0.95)', borderTopColor:'oklch(30% 0.010 50)'} : {}}>
+              {tabs.map((t) =>
+            <button key={t.id} className={`tab-item ${tab === t.id ? 'active' : ''}`} onClick={() => goTab(t.id)}>
+                  <div className="tab-icon"><t.Icon active={tab === t.id} /></div>
+                  <span className="tab-label" style={{ color: tab === t.id ? 'var(--crimson)' : 'oklch(62% 0.010 50)' }}>{t.label}</span>
+                </button>
+            )}
+            </div>
+          }
+        </div>
+      </div>
+
+      <TweaksPanel>
+        <TweakSection label="Display">
+          <TweakToggle label="Status Bar & Island" value={tweaks.showStatusBar} onChange={v => setTweak('showStatusBar', v)} />
+          <TweakToggle label="Phone Bezel" value={tweaks.showBezel} onChange={v => setTweak('showBezel', v)} />
+          <TweakToggle label="Dark Mode" value={tweaks.darkMode} onChange={v => setTweak('darkMode', v)} />
+        </TweakSection>
+      </TweaksPanel>
+    </div>
+    </AppContext.Provider>);
+
+}
+
+// Defer render until tweaks-panel.jsx has exported its components to window.
+// Babel processes external src scripts asynchronously, so we poll briefly.
+(function mountWhenReady(attempts) {
+  if (typeof window.TweaksPanel === 'function' && typeof window.useTweaks === 'function') {
+    ReactDOM.createRoot(document.getElementById('root')).render(<App />);
+  } else if (attempts > 0) {
+    setTimeout(() => mountWhenReady(attempts - 1), 30);
+  } else {
+    // Last resort: mount without tweaks panel (no-op stubs)
+    window.useTweaks = (d) => [d, () => {}];
+    window.TweaksPanel = () => null;
+    window.TweakSection = () => null;
+    window.TweakToggle = () => null;
+    ReactDOM.createRoot(document.getElementById('root')).render(<App />);
+  }
+})(20);
+</script>
+<!-- ── PWA: Service Worker + Install Prompt ─────────────── -->
+<style>
+  #pwa-banner {
+    position: fixed;
+    bottom: 24px;
+    left: 50%;
+    transform: translateX(-50%) translateY(120px);
+    transition: transform 0.35s cubic-bezier(0.34,1.56,0.64,1);
+    z-index: 9999;
+    width: min(360px, 92vw);
+    background: oklch(20% 0.015 50);
+    border: 1px solid oklch(35% 0.01 50);
+    border-radius: 18px;
+    padding: 16px 18px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.45);
+    font-family: 'Source Sans 3', system-ui, sans-serif;
+  }
+  #pwa-banner.visible { transform: translateX(-50%) translateY(0); }
+  #pwa-banner img { width: 48px; height: 48px; border-radius: 12px; flex-shrink: 0; }
+  #pwa-banner-text { flex: 1; min-width: 0; }
+  #pwa-banner-text strong {
+    display: block;
+    font-size: 14px;
+    font-weight: 600;
+    color: oklch(93% 0.010 75);
+    margin-bottom: 2px;
+  }
+  #pwa-banner-text span {
+    font-size: 12px;
+    color: oklch(60% 0.008 50);
+    line-height: 1.4;
+  }
+  #pwa-install-btn {
+    background: oklch(42% 0.12 25);
+    color: oklch(95% 0.008 75);
+    border: none;
+    border-radius: 10px;
+    padding: 9px 16px;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    white-space: nowrap;
+    font-family: inherit;
+    flex-shrink: 0;
+    transition: opacity 0.15s;
+  }
+  #pwa-install-btn:hover { opacity: 0.88; }
+  #pwa-dismiss {
+    background: none;
+    border: none;
+    color: oklch(55% 0.008 50);
+    font-size: 20px;
+    cursor: pointer;
+    padding: 0 0 0 4px;
+    line-height: 1;
+    flex-shrink: 0;
+  }
+  #pwa-offline-bar {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    background: oklch(42% 0.10 50);
+    color: oklch(90% 0.008 75);
+    font-size: 13px;
+    font-family: 'Source Sans 3', system-ui, sans-serif;
+    font-weight: 500;
+    text-align: center;
+    padding: 8px 16px;
+    z-index: 9998;
+    transform: translateY(-100%);
+    transition: transform 0.3s ease;
+  }
+  #pwa-offline-bar.visible { transform: translateY(0); }
+</style>
+
+<!-- Install banner -->
+<div id="pwa-banner" role="dialog" aria-label="Install REAL Therapies app">
+  <img src="icons/icon-192.png" id="pwa-banner-icon" alt="App icon">
+  <div id="pwa-banner-text">
+    <strong>Add to Home Screen</strong>
+    <span>Install for offline access — works without internet.</span>
+  </div>
+  <button id="pwa-install-btn">Install</button>
+  <button id="pwa-dismiss" aria-label="Dismiss">×</button>
+</div>
+
+<!-- Offline indicator -->
+<div id="pwa-offline-bar">⚡ You're offline — REAL Therapies is fully cached and available.</div>
+
+<script>
+(function () {
+  // ── Banner icon — use inlined resource if available ───
+  const bannerIcon = document.getElementById('pwa-banner-icon');
+  if (bannerIcon && window.__resources && window.__resources.appIcon192) {
+    bannerIcon.src = window.__resources.appIcon192;
+  }
+
+  // ── Service Worker registration (skipped in standalone bundle) ──
+  const isStandalone = document.currentScript === null ||
+    document.querySelector('meta[name="ext-resource-dependency"]') !== null;
+  if ('serviceWorker' in navigator && !isStandalone) {
+    window.addEventListener('load', () => {
+      navigator.serviceWorker.register('./sw.js')
+        .then(reg => console.log('[PWA] SW registered, scope:', reg.scope))
+        .catch(err => console.warn('[PWA] SW registration failed:', err));
+    });
+  }
+
+  // ── Offline / online detection ─────────────────────────
+  const offlineBar = document.getElementById('pwa-offline-bar');
+  function updateOnlineStatus() {
+    if (!navigator.onLine) {
+      offlineBar.classList.add('visible');
+    } else {
+      offlineBar.classList.remove('visible');
+    }
+  }
+  window.addEventListener('online',  updateOnlineStatus);
+  window.addEventListener('offline', updateOnlineStatus);
+  updateOnlineStatus();
+
+  // ── Install prompt ─────────────────────────────────────
+  let deferredPrompt = null;
+  const banner      = document.getElementById('pwa-banner');
+  const installBtn  = document.getElementById('pwa-install-btn');
+  const dismissBtn  = document.getElementById('pwa-dismiss');
+
+  // Don't show if already installed or dismissed this session
+  const dismissed = sessionStorage.getItem('pwa-banner-dismissed');
+
+  window.addEventListener('beforeinstallprompt', e => {
+    e.preventDefault();
+    deferredPrompt = e;
+    if (!dismissed) {
+      setTimeout(() => banner.classList.add('visible'), 2500);
+    }
+  });
+
+  installBtn.addEventListener('click', async () => {
+    if (!deferredPrompt) return;
+    banner.classList.remove('visible');
+    deferredPrompt.prompt();
+    const { outcome } = await deferredPrompt.userChoice;
+    console.log('[PWA] Install outcome:', outcome);
+    deferredPrompt = null;
+  });
+
+  dismissBtn.addEventListener('click', () => {
+    banner.classList.remove('visible');
+    sessionStorage.setItem('pwa-banner-dismissed', '1');
+  });
+
+  // Hide banner if app is already running as standalone
+  if (window.matchMedia('(display-mode: standalone)').matches ||
+      window.navigator.standalone === true) {
+    banner.style.display = 'none';
+  }
+
+  // ── App installed event ────────────────────────────────
+  window.addEventListener('appinstalled', () => {
+    console.log('[PWA] App installed!');
+    banner.classList.remove('visible');
+    deferredPrompt = null;
+  });
+})();
+</script>
+
+<template id="__bundler_thumbnail" data-bg-color="#1a1614">
+  <svg viewBox="0 0 400 600" xmlns="http://www.w3.org/2000/svg">
+    <!-- Phone shell -->
+    <rect x="60" y="30" width="280" height="540" rx="40" fill="#2a2420"/>
+    <rect x="68" y="38" width="264" height="524" rx="34" fill="#f5f0e8"/>
+    <!-- Dynamic island -->
+    <rect x="150" y="52" width="100" height="26" rx="13" fill="#1a1614"/>
+    <!-- Hero bar -->
+    <rect x="68" y="80" width="264" height="110" rx="0" fill="#2a2420"/>
+    <!-- App wordmark -->
+    <rect x="88" y="96" width="90" height="8" rx="4" fill="#c0483a" opacity="0.8"/>
+    <!-- Title lines -->
+    <rect x="88" y="112" width="160" height="14" rx="4" fill="#f5f0e8"/>
+    <rect x="88" y="132" width="120" height="14" rx="4" fill="#f5f0e8"/>
+    <!-- Search bar -->
+    <rect x="88" y="158" width="224" height="28" rx="8" fill="#3a3028"/>
+    <circle cx="104" cy="172" r="6" fill="none" stroke="#888" strokeWidth="2"/>
+    <rect x="118" y="168" width="80" height="8" rx="4" fill="#555" opacity="0.5"/>
+    <!-- Quick cards -->
+    <rect x="68" y="202" width="118" height="80" rx="14" fill="white" stroke="#e0d8cc" strokeWidth="1"/>
+    <rect x="80" y="214" width="32" height="32" rx="8" fill="#fde8e6"/>
+    <rect x="80" y="254" width="80" height="8" rx="4" fill="#2a2420"/>
+    <rect x="80" y="266" width="60" height="6" rx="3" fill="#aaa"/>
+    <rect x="198" y="202" width="118" height="80" rx="14" fill="white" stroke="#e0d8cc" strokeWidth="1"/>
+    <rect x="210" y="214" width="32" height="32" rx="8" fill="#e6f5f3"/>
+    <rect x="210" y="254" width="80" height="8" rx="4" fill="#2a2420"/>
+    <rect x="210" y="266" width="60" height="6" rx="3" fill="#aaa"/>
+    <rect x="68" y="292" width="118" height="80" rx="14" fill="white" stroke="#e0d8cc" strokeWidth="1"/>
+    <rect x="80" y="304" width="32" height="32" rx="8" fill="#fdf5e0"/>
+    <rect x="80" y="344" width="80" height="8" rx="4" fill="#2a2420"/>
+    <rect x="80" y="356" width="60" height="6" rx="3" fill="#aaa"/>
+    <rect x="198" y="292" width="118" height="80" rx="14" fill="white" stroke="#e0d8cc" strokeWidth="1"/>
+    <rect x="210" y="304" width="32" height="32" rx="8" fill="#e8eaf5"/>
+    <rect x="210" y="344" width="80" height="8" rx="4" fill="#2a2420"/>
+    <rect x="210" y="356" width="60" height="6" rx="3" fill="#aaa"/>
+    <!-- List rows -->
+    <rect x="68" y="390" width="264" height="100" rx="12" fill="white" stroke="#e0d8cc" strokeWidth="1"/>
+    <rect x="82" y="404" width="24" height="24" rx="6" fill="#fde8e6"/>
+    <rect x="114" y="408" width="100" height="8" rx="4" fill="#2a2420"/>
+    <rect x="114" y="420" width="140" height="6" rx="3" fill="#bbb"/>
+    <rect x="82" y="438" width="24" height="24" rx="6" fill="#fde8e6"/>
+    <rect x="114" y="442" width="80" height="8" rx="4" fill="#2a2420"/>
+    <rect x="114" y="454" width="120" height="6" rx="3" fill="#bbb"/>
+    <!-- Tab bar -->
+    <rect x="68" y="502" width="264" height="60" rx="0" fill="#f5f0e8" opacity="0.95"/>
+    <rect x="68" y="502" width="264" height="1" fill="#e0d8cc"/>
+    <!-- Tab icons -->
+    <rect x="92" y="516" width="20" height="20" rx="4" fill="#c0483a" opacity="0.3"/>
+    <rect x="158" y="516" width="20" height="20" rx="4" fill="#bbb" opacity="0.4"/>
+    <rect x="224" y="516" width="20" height="20" rx="4" fill="#bbb" opacity="0.4"/>
+    <rect x="290" y="516" width="20" height="20" rx="4" fill="#bbb" opacity="0.4"/>
+    <rect x="88" y="540" width="28" height="6" rx="3" fill="#c0483a" opacity="0.5"/>
+    <rect x="154" y="540" width="28" height="6" rx="3" fill="#ccc"/>
+    <rect x="220" y="540" width="28" height="6" rx="3" fill="#ccc"/>
+    <rect x="286" y="540" width="28" height="6" rx="3" fill="#ccc"/>
+  </svg>
+</template>
+</body>
+</html>

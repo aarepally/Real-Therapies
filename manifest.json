@@ -27,14 +27,5 @@
       "type": "image/png",
       "purpose": "any"
     }
-  ],
-  "screenshots": [
-    {
-      "src": "icons/screenshot.png",
-      "sizes": "393x852",
-      "type": "image/png",
-      "form_factor": "narrow",
-      "label": "Home screen"
-    }
   ]
 }

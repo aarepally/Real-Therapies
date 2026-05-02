@@ -23,8 +23,6 @@
 <!-- Favicon -->
 <link rel="icon" type="image/png" sizes="192x192" href="icons/icon-192.png">
 
-<!-- Bundler: inline the banner icon -->
-<meta name="ext-resource-dependency" content="icons/icon-192.png" data-resource-id="appIcon192" />
 <script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
 <script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
 <script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
@@ -85,9 +83,7 @@
       width: 100%;
       height: 100%;
     }
-    /* Hide the fake dynamic island on real devices */
     .dynamic-island { display: none; }
-    /* Hide the fake status bar — iOS provides its own */
     .status-bar { display: none; }
   }
   /* Dynamic island */
@@ -190,9 +186,6 @@
     color: oklch(62% 0.010 50);
   }
   .tab-item.active .tab-label { color: var(--crimson); }
-  .tab-item.active .tab-icon svg path,
-  .tab-item.active .tab-icon svg rect,
-  .tab-item.active .tab-icon svg circle { fill: var(--crimson); }
 
   /* CSS vars on screen */
   .phone-screen {
@@ -308,7 +301,6 @@
     border: 1px solid var(--cream-border);
     box-shadow: 0 1px 4px oklch(0% 0 0 / 0.04);
     transition: transform 0.1s, box-shadow 0.1s;
-    active: transform 0.05s;
   }
   .quick-card:active { transform: scale(0.97); }
   .qc-icon {
@@ -999,7 +991,7 @@
     border-top: 0.5px solid var(--cream-border);
   }
 
-  /* Transition */
+  /* Transitions */
   .screen-slide-enter { animation: slideInRight 0.22s cubic-bezier(0.4,0,0.2,1) forwards; }
   .screen-slide-exit  { animation: slideOutLeft 0.22s cubic-bezier(0.4,0,0.2,1) forwards; }
   @keyframes slideInRight { from { transform: translateX(100%); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
@@ -1037,11 +1029,9 @@
 const { useState, useRef, useEffect, createContext, useContext } = React;
 
 // ── App-level context ─────────────────────────────────────
-const AppContext = createContext({ showStatusBar: true, darkMode: false });
+const AppContext = createContext({ showStatusBar: false, darkMode: false });
 
-
-
-// ── Shared Data (same as web app) ──────────────────────────
+// ── Shared Data ──────────────────────────────────────────
 
 const REGIMENS = {
   community: {
@@ -1158,7 +1148,6 @@ const COVERAGE_GROUPS = [
 }];
 
 const COV_DRUGS = ["CTX", "ERT", "PIP", "FEP", "MER", "CIP", "AZT", "CAZ", "MTZ"];
-const COV_DRUG_LABELS = { CTX: "CTX", ERT: "ERT", PIP: "PIP", FEP: "FEP", MER: "MER", CIP: "CIP", AZT: "AZT", CAZ: "CAZ", MTZ: "MTZ" };
 
 const SEARCH_INDEX = [
 ...Object.entries(REGIMENS).flatMap(([acq, risks]) =>
@@ -1255,7 +1244,6 @@ function StatusBar() {
         </svg>
       </div>
     </div>);
-
 }
 
 // ── Coverage chip ─────────────────────────────────────────
@@ -1286,7 +1274,6 @@ function HomeScreen({ navigate, onSearch }) {
                 placeholder="Search drugs, organisms, sources…"
                 value={q}
                 onChange={(e) => setQ(e.target.value)} />
-              
             </div>
           </form>
         </div>
@@ -1325,7 +1312,6 @@ function HomeScreen({ navigate, onSearch }) {
         <div style={{ height: 8 }} />
       </div>
     </>);
-
 }
 
 // ── SELECTOR SCREEN ───────────────────────────────────────
@@ -1339,13 +1325,13 @@ function SelectorScreen({ navigate, initialResult }) {
     setAnswers(newAnswers);
     setStepIdx(stepIdx + 1);
   }
-  function restart() {setStepIdx(0);setAnswers({});}
+  function restart() { setStepIdx(0); setAnswers({}); }
   function goBack() {
     if (stepIdx > 0) {
       const prev = STEPS[stepIdx - 1];
-      const a = { ...answers };delete a[prev.id];
-      setAnswers(a);setStepIdx(stepIdx - 1);
-    } else {navigate("home");}
+      const a = { ...answers }; delete a[prev.id];
+      setAnswers(a); setStepIdx(stepIdx - 1);
+    } else { navigate("home"); }
   }
 
   const done = stepIdx >= STEPS.length;
@@ -1434,7 +1420,6 @@ function SelectorScreen({ navigate, initialResult }) {
         <div style={{ height: 8 }} />
       </div>
     </>);
-
 }
 
 // ── COVERAGE SCREEN ───────────────────────────────────────
@@ -1493,7 +1478,6 @@ function CoverageScreen({ navigate }) {
         </div>
       </div>
     </>);
-
 }
 
 // ── SOURCES LIST SCREEN ───────────────────────────────────
@@ -1527,7 +1511,6 @@ function SourcesScreen({ navigate }) {
         <div style={{ height: 12 }} />
       </div>
     </>);
-
 }
 
 // ── SOURCE DETAIL SCREEN ──────────────────────────────────
@@ -1590,7 +1573,6 @@ function SourceDetailScreen({ navigate, sourceName, from }) {
         </div>
       </div>
     </>);
-
 }
 
 // ── DURATION SCREEN ───────────────────────────────────────
@@ -1640,14 +1622,13 @@ function DurationScreen({ navigate }) {
         <div style={{ height: 16 }} />
       </div>
     </>);
-
 }
 
 // ── SEARCH SCREEN ─────────────────────────────────────────
 function SearchScreen({ navigate, initialQuery }) {
   const [q, setQ] = useState(initialQuery || "");
   const inputRef = useRef(null);
-  useEffect(() => {if (inputRef.current) inputRef.current.focus();}, []);
+  useEffect(() => { if (inputRef.current) inputRef.current.focus(); }, []);
 
   const results = q.trim().length < 1 ? [] : SEARCH_INDEX.filter((item) =>
   (item.title + " " + item.sub).toLowerCase().includes(q.toLowerCase())
@@ -1661,9 +1642,9 @@ function SearchScreen({ navigate, initialQuery }) {
   }
 
   function handleResult(item) {
-    if (item.screen === "source-detail") navigate("source-detail", { sourceName: item.sourceName, from: "search" });else
-    if (item.screen === "selector" && item.acq) navigate("selector", { acq: item.acq, risk: item.risk, allergy: item.allergy });else
-    navigate(item.screen);
+    if (item.screen === "source-detail") navigate("source-detail", { sourceName: item.sourceName, from: "search" });
+    else if (item.screen === "selector" && item.acq) navigate("selector", { acq: item.acq, risk: item.risk, allergy: item.allergy });
+    else navigate(item.screen);
   }
 
   const tagColor = { Regimen: "", Pathogen: "teal", Source: "", Duration: "gold" };
@@ -1683,7 +1664,6 @@ function SearchScreen({ navigate, initialQuery }) {
             placeholder="Search drugs, organisms, sources…"
             value={q}
             onChange={(e) => setQ(e.target.value)} />
-          
           {q && <span style={{ fontSize: 16, color: 'var(--ink-light)', cursor: 'pointer' }} onClick={() => setQ("")}>×</span>}
         </div>
         <button className="search-cancel" onClick={() => navigate("home")}>Cancel</button>
@@ -1715,7 +1695,6 @@ function SearchScreen({ navigate, initialQuery }) {
         <div style={{ height: 16 }} />
       </div>
     </>);
-
 }
 
 // ── MORE SCREEN ───────────────────────────────────────────
@@ -1766,7 +1745,6 @@ function MoreScreen({ navigate }) {
         <div style={{ height: 8 }} />
       </div>
     </>);
-
 }
 
 // ── ROOT APP ──────────────────────────────────────────────
@@ -1781,13 +1759,10 @@ function App() {
   const [screen, setScreen] = useState("home");
   const [screenProps, setScreenProps] = useState({});
   const [tab, setTab] = useState("home");
-  const [prevScreen, setPrevScreen] = useState(null);
 
   function navigate(to, props = {}) {
-    setPrevScreen(screen);
     setScreenProps(props);
     setScreen(to);
-    // sync tab
     const tabMap = { home: "home", selector: "selector", coverage: "coverage", sources: "more", "source-detail": "more", duration: "more", search: "home" };
     if (tabMap[to]) setTab(tabMap[to]);
   }
@@ -1804,26 +1779,24 @@ function App() {
   { id: "coverage", label: "Coverage", Icon: IconGrid },
   { id: "more", label: "More", Icon: IconMore }];
 
-
-  function handleSearch(q) {navigate("search", { initialQuery: q });}
+  function handleSearch(q) { navigate("search", { initialQuery: q }); }
 
   function renderScreen() {
     switch (screen) {
-      case "home":return <HomeScreen navigate={navigate} onSearch={handleSearch} />;
-      case "selector":return <SelectorScreen navigate={navigate} initialResult={screenProps.acq ? { acquisition: screenProps.acq, risk: screenProps.risk, allergy: screenProps.allergy } : null} />;
-      case "coverage":return <CoverageScreen navigate={navigate} />;
-      case "sources":return <SourcesScreen navigate={navigate} />;
-      case "source-detail":return <SourceDetailScreen navigate={navigate} sourceName={screenProps.sourceName} from={screenProps.from} />;
-      case "duration":return <DurationScreen navigate={navigate} />;
-      case "search":return <SearchScreen navigate={navigate} initialQuery={screenProps.initialQuery} />;
-      case "more":return <MoreScreen navigate={navigate} />;
-      default:return <HomeScreen navigate={navigate} onSearch={handleSearch} />;
+      case "home": return <HomeScreen navigate={navigate} onSearch={handleSearch} />;
+      case "selector": return <SelectorScreen navigate={navigate} initialResult={screenProps.acq ? { acquisition: screenProps.acq, risk: screenProps.risk, allergy: screenProps.allergy } : null} />;
+      case "coverage": return <CoverageScreen navigate={navigate} />;
+      case "sources": return <SourcesScreen navigate={navigate} />;
+      case "source-detail": return <SourceDetailScreen navigate={navigate} sourceName={screenProps.sourceName} from={screenProps.from} />;
+      case "duration": return <DurationScreen navigate={navigate} />;
+      case "search": return <SearchScreen navigate={navigate} initialQuery={screenProps.initialQuery} />;
+      case "more": return <MoreScreen navigate={navigate} />;
+      default: return <HomeScreen navigate={navigate} onSearch={handleSearch} />;
     }
   }
 
   const showTabBar = !["search"].includes(screen);
 
-  // Apply dark mode tweak to screen vars
   const screenStyle = tweaks.darkMode ? {
     '--cream': 'oklch(14% 0.010 50)',
     '--cream-dark': 'oklch(18% 0.012 50)',
@@ -1839,8 +1812,8 @@ function App() {
     <div className="outer">
       <div className="phone-shell" style={tweaks.showBezel ? {} : {borderRadius:0, boxShadow:'none'}}>
         <div className="phone-screen" style={{...screenStyle, ...(tweaks.showBezel ? {} : {borderRadius:0})}}>
-          {/* Dynamic island — hidden via tweak */}
-          {tweaks.showStatusBar && <div className="dynamic-island" />}          <div style={{ flex: 1, display: 'flex', flexDirection: 'column', overflow: 'hidden' }} key={screen}>
+          {tweaks.showStatusBar && <div className="dynamic-island" />}
+          <div style={{ flex: 1, display: 'flex', flexDirection: 'column', overflow: 'hidden' }} key={screen}>
             {renderScreen()}
           </div>
           {showTabBar &&
@@ -1865,26 +1838,22 @@ function App() {
       </TweaksPanel>
     </div>
     </AppContext.Provider>);
-
 }
 
-// Defer render until tweaks-panel.jsx has exported its components to window.
-// Babel processes external src scripts asynchronously, so we poll briefly.
-// Wait for tweaks-panel.jsx to finish exporting, then mount
+// Mount after tweaks-panel.jsx has exported its components to window
 function doMount() {
   ReactDOM.createRoot(document.getElementById('root')).render(<App />);
 }
 if (typeof window.TweaksPanel === 'function') {
   doMount();
 } else {
-  // tweaks-panel.jsx is still being transpiled — wait for it
   document.addEventListener('tweaks-panel-ready', doMount, { once: true });
-  // Fallback: if event never fires, mount after 500ms
   setTimeout(() => {
     if (!document.getElementById('root').hasChildNodes()) doMount();
   }, 500);
 }
 </script>
+
 <!-- ── PWA: Service Worker + Install Prompt ─────────────── -->
 <style>
   #pwa-banner {
@@ -1962,7 +1931,6 @@ if (typeof window.TweaksPanel === 'function') {
   #pwa-offline-bar.visible { transform: translateY(0); }
 </style>
 
-<!-- Install banner -->
 <div id="pwa-banner" role="dialog" aria-label="Install REAL Therapies app">
   <img src="icons/icon-192.png" id="pwa-banner-icon" alt="App icon">
   <div id="pwa-banner-text">
@@ -1973,21 +1941,12 @@ if (typeof window.TweaksPanel === 'function') {
   <button id="pwa-dismiss" aria-label="Dismiss">×</button>
 </div>
 
-<!-- Offline indicator -->
 <div id="pwa-offline-bar">⚡ You're offline — REAL Therapies is fully cached and available.</div>
 
 <script>
 (function () {
-  // ── Banner icon — use inlined resource if available ───
-  const bannerIcon = document.getElementById('pwa-banner-icon');
-  if (bannerIcon && window.__resources && window.__resources.appIcon192) {
-    bannerIcon.src = window.__resources.appIcon192;
-  }
-
-  // ── Service Worker registration (skipped in standalone bundle) ──
-  const isStandalone = document.currentScript === null ||
-    document.querySelector('meta[name="ext-resource-dependency"]') !== null;
-  if ('serviceWorker' in navigator && !isStandalone) {
+  // ── Service Worker registration ──
+  if ('serviceWorker' in navigator) {
     window.addEventListener('load', () => {
       navigator.serviceWorker.register('./sw.js')
         .then(reg => console.log('[PWA] SW registered, scope:', reg.scope))
@@ -2014,7 +1973,6 @@ if (typeof window.TweaksPanel === 'function') {
   const installBtn  = document.getElementById('pwa-install-btn');
   const dismissBtn  = document.getElementById('pwa-dismiss');
 
-  // Don't show if already installed or dismissed this session
   const dismissed = sessionStorage.getItem('pwa-banner-dismissed');
 
   window.addEventListener('beforeinstallprompt', e => {
@@ -2039,13 +1997,11 @@ if (typeof window.TweaksPanel === 'function') {
     sessionStorage.setItem('pwa-banner-dismissed', '1');
   });
 
-  // Hide banner if app is already running as standalone
   if (window.matchMedia('(display-mode: standalone)').matches ||
       window.navigator.standalone === true) {
     banner.style.display = 'none';
   }
 
-  // ── App installed event ────────────────────────────────
   window.addEventListener('appinstalled', () => {
     console.log('[PWA] App installed!');
     banner.classList.remove('visible');
@@ -2054,62 +2010,5 @@ if (typeof window.TweaksPanel === 'function') {
 })();
 </script>
 
-<template id="__bundler_thumbnail" data-bg-color="#1a1614">
-  <svg viewBox="0 0 400 600" xmlns="http://www.w3.org/2000/svg">
-    <!-- Phone shell -->
-    <rect x="60" y="30" width="280" height="540" rx="40" fill="#2a2420"/>
-    <rect x="68" y="38" width="264" height="524" rx="34" fill="#f5f0e8"/>
-    <!-- Dynamic island -->
-    <rect x="150" y="52" width="100" height="26" rx="13" fill="#1a1614"/>
-    <!-- Hero bar -->
-    <rect x="68" y="80" width="264" height="110" rx="0" fill="#2a2420"/>
-    <!-- App wordmark -->
-    <rect x="88" y="96" width="90" height="8" rx="4" fill="#c0483a" opacity="0.8"/>
-    <!-- Title lines -->
-    <rect x="88" y="112" width="160" height="14" rx="4" fill="#f5f0e8"/>
-    <rect x="88" y="132" width="120" height="14" rx="4" fill="#f5f0e8"/>
-    <!-- Search bar -->
-    <rect x="88" y="158" width="224" height="28" rx="8" fill="#3a3028"/>
-    <circle cx="104" cy="172" r="6" fill="none" stroke="#888" strokeWidth="2"/>
-    <rect x="118" y="168" width="80" height="8" rx="4" fill="#555" opacity="0.5"/>
-    <!-- Quick cards -->
-    <rect x="68" y="202" width="118" height="80" rx="14" fill="white" stroke="#e0d8cc" strokeWidth="1"/>
-    <rect x="80" y="214" width="32" height="32" rx="8" fill="#fde8e6"/>
-    <rect x="80" y="254" width="80" height="8" rx="4" fill="#2a2420"/>
-    <rect x="80" y="266" width="60" height="6" rx="3" fill="#aaa"/>
-    <rect x="198" y="202" width="118" height="80" rx="14" fill="white" stroke="#e0d8cc" strokeWidth="1"/>
-    <rect x="210" y="214" width="32" height="32" rx="8" fill="#e6f5f3"/>
-    <rect x="210" y="254" width="80" height="8" rx="4" fill="#2a2420"/>
-    <rect x="210" y="266" width="60" height="6" rx="3" fill="#aaa"/>
-    <rect x="68" y="292" width="118" height="80" rx="14" fill="white" stroke="#e0d8cc" strokeWidth="1"/>
-    <rect x="80" y="304" width="32" height="32" rx="8" fill="#fdf5e0"/>
-    <rect x="80" y="344" width="80" height="8" rx="4" fill="#2a2420"/>
-    <rect x="80" y="356" width="60" height="6" rx="3" fill="#aaa"/>
-    <rect x="198" y="292" width="118" height="80" rx="14" fill="white" stroke="#e0d8cc" strokeWidth="1"/>
-    <rect x="210" y="304" width="32" height="32" rx="8" fill="#e8eaf5"/>
-    <rect x="210" y="344" width="80" height="8" rx="4" fill="#2a2420"/>
-    <rect x="210" y="356" width="60" height="6" rx="3" fill="#aaa"/>
-    <!-- List rows -->
-    <rect x="68" y="390" width="264" height="100" rx="12" fill="white" stroke="#e0d8cc" strokeWidth="1"/>
-    <rect x="82" y="404" width="24" height="24" rx="6" fill="#fde8e6"/>
-    <rect x="114" y="408" width="100" height="8" rx="4" fill="#2a2420"/>
-    <rect x="114" y="420" width="140" height="6" rx="3" fill="#bbb"/>
-    <rect x="82" y="438" width="24" height="24" rx="6" fill="#fde8e6"/>
-    <rect x="114" y="442" width="80" height="8" rx="4" fill="#2a2420"/>
-    <rect x="114" y="454" width="120" height="6" rx="3" fill="#bbb"/>
-    <!-- Tab bar -->
-    <rect x="68" y="502" width="264" height="60" rx="0" fill="#f5f0e8" opacity="0.95"/>
-    <rect x="68" y="502" width="264" height="1" fill="#e0d8cc"/>
-    <!-- Tab icons -->
-    <rect x="92" y="516" width="20" height="20" rx="4" fill="#c0483a" opacity="0.3"/>
-    <rect x="158" y="516" width="20" height="20" rx="4" fill="#bbb" opacity="0.4"/>
-    <rect x="224" y="516" width="20" height="20" rx="4" fill="#bbb" opacity="0.4"/>
-    <rect x="290" y="516" width="20" height="20" rx="4" fill="#bbb" opacity="0.4"/>
-    <rect x="88" y="540" width="28" height="6" rx="3" fill="#c0483a" opacity="0.5"/>
-    <rect x="154" y="540" width="28" height="6" rx="3" fill="#ccc"/>
-    <rect x="220" y="540" width="28" height="6" rx="3" fill="#ccc"/>
-    <rect x="286" y="540" width="28" height="6" rx="3" fill="#ccc"/>
-  </svg>
-</template>
 </body>
 </html>
